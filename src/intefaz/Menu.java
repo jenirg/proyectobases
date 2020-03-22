@@ -165,8 +165,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void REGISTROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGISTROActionPerformed
         // TODO add your handling code here:
-        crearcuenta cuentanueva = new crearcuenta();
-        cuentanueva.setVisible(true);
+         inventario inventario = new inventario();
+         inventario.setVisible(true);
         dispose();
     }//GEN-LAST:event_REGISTROActionPerformed
 
@@ -202,6 +202,9 @@ public class Menu extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

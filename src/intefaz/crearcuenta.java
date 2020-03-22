@@ -1,31 +1,38 @@
-
 package intefaz;
 
 //import com.sun.glass.events.KeyEvent;
-
+import Usuario.Almacen_Pass;
+import Usuario.Compresor;
+import Usuario.Pregunta;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import sun.security.util.Password;
-
 
 /**
  *
  * @author dell
  */
 public class crearcuenta extends javax.swing.JFrame {
-String letra;
+
+    String letra, dpi = "", pregunta = "", nombre = "", apellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "";
+    int Dia = 0, Año = 0;
+    int nopregunta = 0;
+
     /**
      * Creates new form crearcuenta
      */
     public crearcuenta() {
         initComponents();
-      this.setLocationRelativeTo(null);
-      dependencias();
+        this.setLocationRelativeTo(null);
+        dependencias();
     }
-    public void dependencias(){
-   
-        dependencia.addItem(letra);    
+
+    public void dependencias() {
+
+        dependencia.addItem(letra);
     }
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,6 +68,7 @@ String letra;
         jPassword1 = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -78,7 +86,7 @@ String letra;
         jLabel2.setText("Apellidos:");
 
         jTextField1.setBackground(new java.awt.Color(153, 153, 255));
-        jTextField1.setText("Apellidos");
+        jTextField1.setText("Apellido");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -95,7 +103,7 @@ String letra;
         jLabel3.setText("Nombre:");
 
         jTextField2.setBackground(new java.awt.Color(153, 153, 255));
-        jTextField2.setText("Nombres");
+        jTextField2.setText("Nombre");
         jTextField2.setToolTipText("Nombres");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +258,15 @@ String letra;
             }
         });
 
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton1.setText("SUPER USUARIO");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -281,7 +298,9 @@ String letra;
                                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(dependencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(29, 29, 29)
@@ -348,7 +367,8 @@ String letra;
                 .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(dependencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dependencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
@@ -406,20 +426,20 @@ String letra;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-          Menu menul = new Menu();
-          menul.setVisible(true);
-          dispose();
+        Ingreso regis = new Ingreso();
+        regis.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyPressed
         // TODO add your handling code here:
-         jTextField6.getText();
-         if(evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+        la_dependencia = jTextField6.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             letra = jTextField6.getText();
             dependencias();
         }
@@ -427,28 +447,164 @@ String letra;
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+        if (dpi.equals("") || nombre.equals("") || apellido.equals("") || correo.equals("") || Dia == 0 || Año == 0 || Mes.equals("") || password.equals("") || la_dependencia.equals("")) {
+            JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
+        } else {
+            if (jRadioButton1.isSelected()) {
+                int seleccion = JOptionPane.showOptionDialog(
+                        null,
+                        "¿DESEA CREAR UNA CUENTA DE SUPER USUARIO?",
+                        "",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null, // null para icono por defecto.
+                        new Object[]{"Sí", "No", "Cancelar"}, // null para YES, NO y CANCEL
+                        "Sí");
 
+                if (seleccion != -1) {
+                    if (seleccion == 0) {
+                        //ir a el area de aprobación por el super usuario
+                        int seleccion1 = JOptionPane.showOptionDialog(
+                                null,
+                                "¿EL SUPER USUARIO ANTIGUO ESTA DEACUERDO CON EL CAMBIO?",
+                                "",
+                                JOptionPane.YES_NO_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null, // null para icono por defecto.
+                                new Object[]{"Sí", "No", "Cancelar"}, // null para YES, NO y CANCEL
+                                "Sí");
+
+                        if (seleccion1 != -1) {
+                            if (seleccion1 == 0) {
+                                //ir a el area de aprobación por el super usuario
+                                String dpi = (String) JOptionPane.showInputDialog("Ingrese su número de dpi");
+                                String correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
+                                String contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña 
+                                //buscar al super usuario, extraer datos y comparar
+                                if (dpi.equals("123456789") && correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
+                                    nopregunta = (int) (Math.random() * 5) + 1;
+                                    // extraemos el numero de pregunta que le corresponde al super usuario antiguo
+                                    // y extraemos la respuesta
+                                    String pregunta_extraida = "", respuesta_extraida = "hola", respuesta = "";
+
+                                    if (nopregunta == 1) {
+                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Nombre de su primera mascota?");
+                                        verificacion(respuesta_extraida, respuesta);
+                                    } else if (nopregunta == 2) {
+                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Nombre de su primmera maestra?");
+                                        verificacion(respuesta_extraida, respuesta);
+
+                                    } else if (nopregunta == 3) {
+                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Cuál es su comida favorita?");
+                                        verificacion(respuesta_extraida, respuesta);
+
+                                    } else if (nopregunta == 4) {
+                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Cuál es su pelicula favorita?");
+                                        verificacion(respuesta_extraida, respuesta);
+
+                                    } else if (nopregunta == 5) {
+                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Cuál es su pasatiempo favorito");
+                                        verificacion(respuesta_extraida, respuesta);
+
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "USTED NO ES EL SUPER USUARIO");
+
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "DESACTIVE EL RADIO BUTTON");
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "DESACTIVE EL RADIO BUTTON");
+                    }
+                }
+
+            } else {
+                int seleccion3 = JOptionPane.showOptionDialog(
+                        null,
+                        "¿USTED ES EL SUPER USUARIO?",
+                        "",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null, // null para icono por defecto.
+                        new Object[]{"Sí", "No", "Cancelar"}, // null para YES, NO y CANCEL
+                        "Sí");
+
+                if (seleccion3 != -1) {
+                    if (seleccion3 == 0) {
+                        //buscar al super usuario, extraer datos y comparar
+
+                        correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
+                        contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña
+                        if (correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
+                            // eliminar al super usario actual y guardar al nuevo
+                            JOptionPane.showMessageDialog(null, "LA CUENTA YA FUE CREADA");
+                        }else {
+                        JOptionPane.showMessageDialog(null, "INTENTE DE NUEVO, SUS DATOS NO ESTAN CORRECTOS");
+
+                    }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "NO OLVIDE QUE EL SUPER USUARIO DEBE ESTAR PRESENTE PARA CUALQUIER CAMBIO");
+
+                    }
+                }
+            }
+       }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    private void verificacion(String respuesta_extraida, String respuesta) {
+        //comprimir la respuesta que ingresa
+        if (respuesta_extraida.equals(respuesta)) {
+            int seleccion3 = JOptionPane.showOptionDialog(
+                    null,
+                    "¿QUIERE DEJAR DE SER SUPER USUARIO?",
+                    "",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, // null para icono por defecto.
+                    new Object[]{"Sí", "No", "Cancelar"}, // null para YES, NO y CANCEL
+                    "Sí");
+
+            if (seleccion3 != -1) {
+                if (seleccion3 == 0) {
+                    //buscar al super usuario, extraer datos y comparar
+
+                    correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
+                    contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña
+                    if (correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
+                        // eliminar al super usario actual y guardar al nuevo
+                        JOptionPane.showMessageDialog(null, "EL SUPER USUARIO A SIDO ACTUALIZADO");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "DESACTIVE EL RADIO BUTTON");
+
+                }
+            }
+        }
+    }
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         // TODO add your handling code here:
-        jTextField2.getText();
+        nombre = jTextField2.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-        jTextField1.getText();
+        apellido = jTextField1.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
         // TODO add your handling code here:
-        jTextField4.getText();
+        correo = jTextField4.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField4KeyPressed
 
     private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
@@ -457,23 +613,27 @@ String letra;
 
     private void jPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordKeyPressed
         // TODO add your handling code here:
-    //    String contraseña = new String(Password.getPassword());
-        
+        //    String contraseña = new String(Password.getPassword());
+
     }//GEN-LAST:event_jPasswordKeyPressed
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
         // TODO add your handling code here:
-         int dia = (int) jComboBox2.getSelectedItem();
+        int dia = (int) jComboBox2.getSelectedItem();
+        Dia = dia;
+
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
         String mes = (String) jComboBox1.getSelectedItem();
+        Mes = mes;
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
         // TODO add your handling code here:
         int año = (int) jComboBox3.getSelectedItem();
+        Año = año;
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -482,8 +642,14 @@ String letra;
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
-         jTextField3.getText();
+        jTextField3.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -510,6 +676,9 @@ String letra;
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(crearcuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -541,6 +710,7 @@ String letra;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JPasswordField jPassword1;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

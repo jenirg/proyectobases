@@ -4,16 +4,20 @@
  * and open the template in the editor.
  */
 package intefaz;
+
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author dell
  */
 public class Ingreso extends javax.swing.JFrame {
 
-        int numerodpi, nopregunta, p1,p2,p3,p4,p5;
-        String pregunta;
+    int numerodpi, nopregunta, p1, p2, p3, p4, p5;
+    String pregunta, correo = "", contraseña = "";
     public boolean ver = true;
+
     /**
      * Creates new form Ingreso
      */
@@ -22,7 +26,7 @@ public class Ingreso extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtPassOculto.setVisible(true);
         txtPassVisible.setVisible(false);
-        
+
     }
 
     /**
@@ -47,6 +51,7 @@ public class Ingreso extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         mostrar = new javax.swing.JButton();
         jButtonsesion1 = new javax.swing.JButton();
+        jButtonsesion2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -145,7 +150,7 @@ public class Ingreso extends javax.swing.JFrame {
         });
 
         jButtonsesion1.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonsesion1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButtonsesion1.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         jButtonsesion1.setForeground(new java.awt.Color(255, 255, 255));
         jButtonsesion1.setText("OLVIDE CONTRASEÑA");
         jButtonsesion1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -156,6 +161,16 @@ public class Ingreso extends javax.swing.JFrame {
         jButtonsesion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonsesion1ActionPerformed(evt);
+            }
+        });
+
+        jButtonsesion2.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonsesion2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonsesion2.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonsesion2.setText("Crear cuenta");
+        jButtonsesion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonsesion2ActionPerformed(evt);
             }
         });
 
@@ -178,15 +193,17 @@ public class Ingreso extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPassVisible, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(mostrar))
-                                    .addComponent(jTextFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jButtonsesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPassVisible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonsesion1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonsesion2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonsesion))
                             .addComponent(jButton2))))
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -198,27 +215,25 @@ public class Ingreso extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mostrar))
-                        .addGap(40, 40, 40))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtPassVisible, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mostrar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPassVisible, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonsesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonsesion)
-                    .addComponent(jButtonsesion1))
+                    .addComponent(jButtonsesion2))
                 .addGap(24, 24, 24))
         );
 
@@ -251,7 +266,7 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-          System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextFieldUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUserActionPerformed
@@ -264,14 +279,16 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-            Menu menul = new Menu();
-            menul.setVisible(true);
-            dispose();
+        Menu menul = new Menu();
+        menul.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUserKeyPressed
         // TODO add your handling code here:
         jTextFieldUser.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextFieldUserKeyPressed
 
     private void txtPassOcultoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassOcultoActionPerformed
@@ -280,7 +297,7 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void txtPassOcultoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassOcultoKeyPressed
         // TODO add your handling code here:
-        //jPassword.getText(); 
+        txtPassOculto.getText();
     }//GEN-LAST:event_txtPassOcultoKeyPressed
 
     private void txtPassVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassVisibleActionPerformed
@@ -307,36 +324,73 @@ public class Ingreso extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarActionPerformed
 
     private void jButtonsesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsesion1ActionPerformed
-
         // TODO add your handling code here:
-   
-        
-        
+
+
     }//GEN-LAST:event_jButtonsesion1ActionPerformed
 
     private void jButtonsesion1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonsesion1MouseClicked
         // TODO add your handling code here:
-       nopregunta = (int) (Math.random() * 6) + 1;
+        //buscar el número de pregunta de x usuario y comparar su resputa
+        nopregunta = (int) (Math.random() * 6) + 1;
         //return numerodado;
-        if(nopregunta == 1)
-            pregunta = (String)JOptionPane.showInputDialog("¿Nombre de su primera mascota?");
-        else if(nopregunta == 2)
-             pregunta = (String)JOptionPane.showInputDialog("¿Nombre de su primmera maestra?");
-        else if(nopregunta == 3)
-             pregunta = (String)JOptionPane.showInputDialog("¿Cuál es su comida favorita?");
-        else if(nopregunta == 4)
-             pregunta = (String)JOptionPane.showInputDialog("¿Cuál es su pelicula favorita?");
-        else if(nopregunta == 4)
-             pregunta = (String)JOptionPane.showInputDialog("¿Cuál es su pasatiempo favorito");
-       // numerodpi = parseInt(JOptionPane.showInputDialog("I"Nombre de su primmera maestraNGRESE EL NUMERO DE DPI"));
-        if(numerodpi == 1234){
-        recuperarcontraseña contraseña = new recuperarcontraseña ();
-          contraseña.setVisible(true);
-          dispose();
-    }
-                
-       
+        if (nopregunta == 1) {
+            pregunta = (String) JOptionPane.showInputDialog("¿Nombre de su primera mascota?");
+            verificacion("hola", pregunta);
+
+        } else if (nopregunta == 2) {
+            pregunta = (String) JOptionPane.showInputDialog("¿Nombre de su primmera maestra?");
+            verificacion("hola", pregunta);
+        } else if (nopregunta == 3) {
+            pregunta = (String) JOptionPane.showInputDialog("¿Cuál es su comida favorita?");
+        } else if (nopregunta == 4) {
+            pregunta = (String) JOptionPane.showInputDialog("¿Cuál es su pelicula favorita?");
+            verificacion("hola", pregunta);
+        } else if (nopregunta == 5) {
+            pregunta = (String) JOptionPane.showInputDialog("¿Cuál es su pasatiempo favorito");
+            verificacion("hola", pregunta);
+
+        }
+
     }//GEN-LAST:event_jButtonsesion1MouseClicked
+    private void verificacion(String respuesta_extraida, String respuesta) {
+        //comprimir la respuesta que ingresa
+        if (respuesta_extraida.equals(respuesta)) {
+            int seleccion3 = JOptionPane.showOptionDialog(
+                    null,
+                    "¿QUIERE INICIAR YA CON EL CAMBIO DE CONTRASEÑA?",
+                    "",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, // null para icono por defecto.
+                    new Object[]{"Sí", "No", "Cancelar"}, // null para YES, NO y CANCEL
+                    "Sí");
+
+            if (seleccion3 != -1) {
+                if (seleccion3 == 0) {
+                    //buscar al super usuario, extraer datos y comparar
+                    //vamos al area de actualización de contraseña
+                    //se solicita contraseña nueva y la confirmación y se extrae la antigua
+                    String correo_SU = (String) JOptionPane.showInputDialog("Ingrese el correo electronico del SUPER USUARIO");
+                    String contraseña_SU = (String) JOptionPane.showInputDialog(null, "Ingrese contraseña del SUPER USUARIO");//hay que corregir este campo, no se debe ver la contraseña
+
+                    if (correo_SU.equals("prueba@gmail.com") && contraseña_SU.equals("1234abcd")) {
+                        // actualizar la contraseña del correo que lo solicito el cambio
+                        JOptionPane.showMessageDialog(null, "EL CAMBIO DE CONTRASEÑA FUE UN EXITO");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ESTAMOS A SUS ORDENES");
+
+                }
+            }
+        }
+    }
+    private void jButtonsesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsesion2ActionPerformed
+        // TODO add your handling code here:
+        crearcuenta cuentanueva = new crearcuenta();
+        cuentanueva.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButtonsesion2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,6 +418,9 @@ public class Ingreso extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Ingreso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -378,6 +435,7 @@ public class Ingreso extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonsesion;
     private javax.swing.JButton jButtonsesion1;
+    private javax.swing.JButton jButtonsesion2;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
