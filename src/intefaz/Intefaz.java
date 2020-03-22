@@ -12,9 +12,11 @@ public class Intefaz {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        for (int i=1950; i<=2020;i++){
-            System.out.println(i);
-        }
+        //for (int i=1950; i<=2020;i++){
+         //   System.out.println(i);
+        //}
+        Menu xx = new Menu();
+        xx.show(true);
     }
     
 }

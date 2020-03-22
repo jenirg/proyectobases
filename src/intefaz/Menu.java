@@ -38,7 +38,6 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(814, 510));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
@@ -86,7 +85,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(153, 0, 0));
+        jButton1.setBackground(new java.awt.Color(204, 0, 0));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("SALIR");
@@ -166,8 +165,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void REGISTROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGISTROActionPerformed
         // TODO add your handling code here:
-        Ingreso regis = new Ingreso();
-        regis.setVisible(true);
+        crearcuenta cuentanueva = new crearcuenta();
+        cuentanueva.setVisible(true);
         dispose();
     }//GEN-LAST:event_REGISTROActionPerformed
 
