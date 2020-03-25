@@ -188,6 +188,11 @@ public class inventario extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Generar factura");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jRadioButton2.setBackground(new java.awt.Color(0, 102, 255));
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -492,6 +497,12 @@ public class inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Forma57 yy = new Forma57();
+          yy.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
