@@ -15,7 +15,7 @@ import sun.security.util.Password;
  */
 public class crearcuenta extends javax.swing.JFrame {
 
-    String letra, dpi = "", pregunta = "", nombre = "", apellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "";
+    String letra, dpi = "", pregunta = "", primernombre = "", segundonombre = "", primerapellido = "", segundoapellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "";
     int Dia = 0, Año = 0;
     int nopregunta = 0;
 
@@ -140,6 +140,11 @@ public class crearcuenta extends javax.swing.JFrame {
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
+            }
+        });
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
             }
         });
         jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -379,7 +384,6 @@ public class crearcuenta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -497,7 +501,7 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if (dpi.equals("") || nombre.equals("") || apellido.equals("") || correo.equals("") || Dia == 0 || Año == 0 || Mes.equals("") || password.equals("") || la_dependencia.equals("")) {
+        if (dpi.equals("") || primernombre.equals("") ||  segundonombre.equals("") || primerapellido.equals("") || segundoapellido.equals("") ||  correo.equals("") || Dia == 0 || Año == 0 || Mes.equals("") || password.equals("") || la_dependencia.equals("")) {
             JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
         } else {
             if (jRadioButton1.isSelected()) {
@@ -638,14 +642,14 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         // TODO add your handling code here:
-        nombre = jTextField2.getText();
+        primernombre = jTextField2.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-        apellido = jTextField1.getText();
+        segundoapellido = jTextField1.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         }
     }//GEN-LAST:event_jTextField1KeyPressed
@@ -692,7 +696,8 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
-        jTextField3.getText();
+       // jTextField3.getText();
+       dpi =jTextField3.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         }
     }//GEN-LAST:event_jTextField3KeyPressed
@@ -707,6 +712,9 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         // TODO add your handling code here:
+         primerapellido = jTextField5.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField5KeyPressed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
@@ -715,7 +723,14 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
         // TODO add your handling code here:
+         segundonombre = jTextField7.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField7KeyPressed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments

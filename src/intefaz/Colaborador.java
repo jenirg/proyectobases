@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package intefaz;
 
-/**
- *
- * @author jenirg
- */
+package intefaz;
+ 
+import java.awt.event.KeyEvent;
+
 public class Colaborador extends javax.swing.JFrame {
+ String pnombrecolab = "", snombrecolab = "", papellidocolab = "", sapellidocolab = "",puestocolab = "", dependenciacolab ="" ;
+ 
 
     /**
      * Creates new form Colaborador
@@ -264,7 +260,7 @@ public class Colaborador extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Menu2 menul = new Menu2();
+         Menu2 menul = new Menu2();
           menul.setVisible(true);
           dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -280,32 +276,48 @@ public class Colaborador extends javax.swing.JFrame {
 
     private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
         // TODO add your handling code here:
-         jTextField7.getText();
+         pnombrecolab = jTextField7.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
+        
     }//GEN-LAST:event_jTextField7KeyPressed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         // TODO add your handling code here:
-         jTextField2.getText();
+         snombrecolab = jTextField2.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
+         
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
-         jTextField3.getText();
+         papellidocolab = jTextField2.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
+        
     }//GEN-LAST:event_jTextField3KeyPressed
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
         // TODO add your handling code here:
-         jTextField4.getText();
+         sapellidocolab = jTextField4.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
+        
     }//GEN-LAST:event_jTextField4KeyPressed
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         // TODO add your handling code here:
-         jTextField5.getText();
+         puestocolab = jTextField5.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField5KeyPressed
 
     private void jTextField6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyPressed
         // TODO add your handling code here:
-         jTextField6.getText();
+          dependenciacolab = jTextField6.getText();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        }
     }//GEN-LAST:event_jTextField6KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
