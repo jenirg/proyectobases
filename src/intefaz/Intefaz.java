@@ -26,9 +26,11 @@ public class Intefaz {
     public static void main(String[] args) throws SQLException   {
         CRUD miCrud = new CRUD();
         //Date fechaDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-06");
-            miCrud.Insertar("compu",4, "Lucas");
-       
-        
+            //miCrud.Insertar("compu",4, "Lucas");
+        //miCrud.Insertar_registro("telefono", 2, "zt","saber","claro","ruta_imagen", 1200, 600, 2);
+        //miCrud.Insertar_serie("ghi789");
+        //miCrud.Insertar_dependencia("Administrativa");
+        //miCrud.Insertar_puesto("Gerente");
         
         // TODO code application logic here
         //for (int i=1950; i<=2020;i++){
