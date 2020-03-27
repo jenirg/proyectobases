@@ -168,9 +168,12 @@ public class Menu2 extends javax.swing.JFrame {
 
     private void REGISTRO1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGISTRO1ActionPerformed
         // TODO add your handling code here
-        Colaborador xx = new Colaborador();
+         Ingreso yy = new Ingreso(3);
+         yy.setVisible(true);
+        
+        /*Colaborador xx = new Colaborador();
         xx.setVisible(true);
-        dispose();
+        dispose();*/
     }//GEN-LAST:event_REGISTRO1ActionPerformed
 
     /**

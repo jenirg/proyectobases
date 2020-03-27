@@ -7,6 +7,7 @@ package intefaz;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import sun.security.util.Password;
 
 /**
  *
@@ -14,8 +15,9 @@ import javax.swing.JOptionPane;
  */
 public class Ingreso extends javax.swing.JFrame {
 
-    int numerodpi, nopregunta, p1, p2, p3, p4, p5;
-    String pregunta, correo = "", contraseña = "";
+    int numerodpi, nopregunta, p1, p2, p3, p4, p5, boton_numero;
+    String pregunta, correo = "", contraseña = "", usuario = "";
+    Password contraseña3;
     public boolean ver = true;
 
     /**
@@ -26,9 +28,15 @@ public class Ingreso extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtPassOculto.setVisible(true);
         txtPassVisible.setVisible(false);
+    }
+    public Ingreso(int numero_del_boton) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        txtPassOculto.setVisible(true);
+        txtPassVisible.setVisible(false);
+        boton_numero=numero_del_boton;
 
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,7 +57,6 @@ public class Ingreso extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPassVisible = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        mostrar = new javax.swing.JButton();
         jButtonsesion1 = new javax.swing.JButton();
         jButtonsesion2 = new javax.swing.JButton();
 
@@ -139,16 +146,6 @@ public class Ingreso extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuarioycontraseña.png"))); // NOI18N
 
-        mostrar.setBackground(new java.awt.Color(0, 0, 51));
-        mostrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        mostrar.setForeground(new java.awt.Color(255, 255, 255));
-        mostrar.setText("...");
-        mostrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarActionPerformed(evt);
-            }
-        });
-
         jButtonsesion1.setBackground(new java.awt.Color(0, 0, 51));
         jButtonsesion1.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         jButtonsesion1.setForeground(new java.awt.Color(255, 255, 255));
@@ -193,14 +190,12 @@ public class Ingreso extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(mostrar))
+                                    .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jButtonsesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtPassVisible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txtPassVisible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(55, 55, 55))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonsesion2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -224,8 +219,7 @@ public class Ingreso extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mostrar))
+                    .addComponent(txtPassOculto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassVisible, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -275,6 +269,33 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void jButtonsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsesionActionPerformed
         // TODO add your handling code here:
+        usuario = jTextFieldUser.getText();
+        System.out.println("1 Usuario" + usuario);
+        char[] contraseña = txtPassOculto.getPassword();
+        System.out.println("2 Contraseña" + contraseña);
+        if (usuario.equals("") || contraseña.equals("")) {
+            JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
+        }
+         //verificar que la cuenta exista y sea la correcta BD
+
+         if(boton_numero==1){
+         inventario i=new inventario();
+         i.setVisible(true);
+         dispose();
+        }
+        else if (boton_numero==2){
+        notaderesponsabilidad entrega = new notaderesponsabilidad();
+        entrega.setVisible(true);
+        dispose();
+        }
+         else if (boton_numero==3){
+        Colaborador xx = new Colaborador();
+        xx.setVisible(true);
+        dispose();
+        }
+         else if (boton_numero==4){
+        
+        }
     }//GEN-LAST:event_jButtonsesionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -286,8 +307,9 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void jTextFieldUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUserKeyPressed
         // TODO add your handling code here:
-        jTextFieldUser.getText();
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            usuario = jTextFieldUser.getText();
         }
     }//GEN-LAST:event_jTextFieldUserKeyPressed
 
@@ -297,7 +319,19 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void txtPassOcultoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassOcultoKeyPressed
         // TODO add your handling code here:
-        txtPassOculto.getText();
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String pass_concatenada = "";
+            char[] contraseña = txtPassOculto.getPassword();
+            for (int i = 0; i < contraseña.length; i++) {
+                pass_concatenada = pass_concatenada + contraseña[i];
+                System.out.println(contraseña[i]);
+            }
+            System.out.println(pass_concatenada);
+            //contraseña= txtPassOculto.getPassword();
+            //contraseña3=txtPassOculto.getPassword();
+            //String contraseña_SU = (String) txtPassOculto.getPassword();
+        }
     }//GEN-LAST:event_txtPassOcultoKeyPressed
 
     private void txtPassVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassVisibleActionPerformed
@@ -307,21 +341,6 @@ public class Ingreso extends javax.swing.JFrame {
     private void txtPassVisibleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassVisibleKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPassVisibleKeyPressed
-
-    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-        // TODO add your handling code here:
-        /*if(ver){
-              txtPassVisible.setVisible(true);
-              txtPassOculto.setVisible(false);
-              txtPassVisible.setText(txtPassOculto.getText());
-              ver = false;
-        }else{
-                    txtPassVisible.setVisible(true);
-                     txtPassOculto.setVisible(false);
-                     txtPassOculto.setText(txtPassVisible.getText());
-                     ver = true;
-        }   */
-    }//GEN-LAST:event_mostrarActionPerformed
 
     private void jButtonsesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsesion1ActionPerformed
         // TODO add your handling code here:
@@ -442,7 +461,6 @@ public class Ingreso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldUser;
-    private javax.swing.JButton mostrar;
     private javax.swing.JPasswordField txtPassOculto;
     private javax.swing.JTextField txtPassVisible;
     // End of variables declaration//GEN-END:variables

@@ -147,10 +147,16 @@ public class Menu extends javax.swing.JFrame {
 
     private void ENTREGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ENTREGAActionPerformed
         // TODO add your handling code here:
+         Ingreso yy = new Ingreso(4);
+         yy.setVisible(true);
     }//GEN-LAST:event_ENTREGAActionPerformed
 
     private void ENTREGA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ENTREGA1ActionPerformed
         // TODO add your handling code here:
+         Ingreso yy = new Ingreso(2);
+         yy.setVisible(true);
+        
+       /* */
     }//GEN-LAST:event_ENTREGA1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -160,9 +166,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void REGISTROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGISTROActionPerformed
         // TODO add your handling code here:
-         inventario inventario = new inventario();
-         inventario.setVisible(true);
-         dispose();
+         Ingreso yy = new Ingreso(1);
+         yy.setVisible(true);
+         //dispose();
     }//GEN-LAST:event_REGISTROActionPerformed
 
     private void USUARIOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USUARIOSActionPerformed

@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import Clases.*;
+import Usuario.Compresor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -24,11 +25,12 @@ public class Intefaz {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException   {
-        CRUD miCrud = new CRUD();
+        //CRUD miCrud = new CRUD();
         //Date fechaDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-06");
             //miCrud.Insertar("compu",4, "Lucas");
-        //miCrud.Insertar_registro("telefono", 2, "zt","saber","claro","ruta_imagen", 1200, 600, 2);
-        //miCrud.Insertar_serie("ghi789");
+        //miCrud.Insertar_serie("ghi789");    
+        //miCrud.Insertar_registro("telefono", 2, "zt","saber","claro","ruta_imagen", 1200, 600, 4);
+        
         //miCrud.Insertar_dependencia("Administrativa");
         //miCrud.Insertar_puesto("Gerente");
         

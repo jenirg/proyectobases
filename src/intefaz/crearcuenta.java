@@ -15,9 +15,10 @@ import sun.security.util.Password;
  */
 public class crearcuenta extends javax.swing.JFrame {
 
-    String letra, dpi = "", pregunta = "", primernombre = "", segundonombre = "", primerapellido = "", segundoapellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "";
+    String letra, dpi = "", pregunta = "", primernombre = "", segundonombre = "", primerapellido = "", segundoapellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "", otradependencia = "";
     int Dia = 0, Año = 0;
     int nopregunta = 0;
+    String pass_concatenada1 = "", pass_concatenada2 = "";
 
     /**
      * Creates new form crearcuenta
@@ -241,6 +242,11 @@ public class crearcuenta extends javax.swing.JFrame {
 
         jPassword.setBackground(new java.awt.Color(153, 153, 255));
         jPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordActionPerformed(evt);
+            }
+        });
         jPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPasswordKeyPressed(evt);
@@ -249,6 +255,11 @@ public class crearcuenta extends javax.swing.JFrame {
 
         jPassword1.setBackground(new java.awt.Color(153, 153, 255));
         jPassword1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPassword1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPassword1KeyPressed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 0, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -480,9 +491,9 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         Menu2 menul = new Menu2();
-          menul.setVisible(true);
-          //dispose(); 
+        Menu2 menul = new Menu2();
+        menul.setVisible(true);
+        //dispose(); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -492,17 +503,60 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyPressed
         // TODO add your handling code here:
-        la_dependencia = jTextField6.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            letra = jTextField6.getText();
-            dependencias();
+            //la_dependencia = jTextField6.getText();
+            //  jTextField7.setText("");
+            //jTextField7.requestFocus();
         }
     }//GEN-LAST:event_jTextField6KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if (dpi.equals("") || primernombre.equals("") ||  segundonombre.equals("") || primerapellido.equals("") || segundoapellido.equals("") ||  correo.equals("") || Dia == 0 || Año == 0 || Mes.equals("") || password.equals("") || la_dependencia.equals("")) {
-            JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
+        pass_concatenada1 = "";
+        pass_concatenada2 = "";
+        primernombre = jTextField2.getText();
+        segundonombre = jTextField7.getText();
+        primerapellido = jTextField5.getText();
+        segundoapellido = jTextField1.getText();
+        dpi = jTextField3.getText();
+        correo = jTextField4.getText();
+        la_dependencia = (String) dependencia.getSelectedItem();
+        char[] contraseña1 = jPassword.getPassword();
+        for (int i = 0; i < contraseña1.length; i++) {
+            pass_concatenada1 = pass_concatenada1 + contraseña1[i];
+            System.out.println(contraseña1[i]);
+        }
+        char[] contraseña2 = jPassword1.getPassword();
+        for (int i = 0; i < contraseña2.length; i++) {
+            pass_concatenada2 = pass_concatenada2 + contraseña2[i];
+            System.out.println(contraseña2[i]);
+        }
+
+//        Dia= (int) jComboBox2.getSelectedItem();
+//        Mes= (String) jComboBox1.getSelectedItem();
+//        Año=(int) jComboBox3.getSelectedItem();
+        System.out.println("1 nombre  " + primernombre);
+        System.out.println("2 nombre  " + segundonombre);
+        System.out.println("1 apellido  " + primerapellido);
+        System.out.println("2 apelldio  " + segundoapellido);
+        System.out.println("No DPI " + dpi);
+        System.out.println("correo " + correo);
+        System.out.println("depedencia " + dependencia);
+        System.out.println("pass1 " + pass_concatenada1);
+        System.out.println("pass2 " + pass_concatenada2);
+        int compatible = pass_concatenada1.compareTo(pass_concatenada2);
+        System.out.println("compatible  " + compatible);
+        if (primernombre.equals("") || dpi.equals("") || segundonombre.equals("") || primerapellido.equals("") || segundoapellido.equals("") || correo.equals("") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/ || pass_concatenada2.equals("") || pass_concatenada1.equals("") || la_dependencia.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ha dejado algun campo vacio, el proceso no puede continuar, verifique los datos");
+        } else if (dpi.equals("No de DPI") || primernombre.equals("Primer Nombre") || segundonombre.equals("Segundo Nombre") || primerapellido.equals("Primer Apellido") || segundoapellido.equals("Segundo Apellido") || correo.equals("alguien@gmail.com") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/) {
+            JOptionPane.showMessageDialog(null, "No ha llenado los datos de forma correcta, no se puede continuar con el proceso, verifique los datos");
+        } else if (compatible < 0 || compatible > 0) {
+            JOptionPane.showMessageDialog(null, "La confirmación de contraseña no es la misma , verifique");
+            pass_concatenada1 = "";
+            pass_concatenada2 = "";
+            jPassword.setText("");
+            jPassword1.setText("");
+            jPassword.requestFocus();
         } else {
             if (jRadioButton1.isSelected()) {
                 int seleccion = JOptionPane.showOptionDialog(
@@ -594,17 +648,17 @@ public class crearcuenta extends javax.swing.JFrame {
                         if (correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
                             // eliminar al super usario actual y guardar al nuevo
                             JOptionPane.showMessageDialog(null, "LA CUENTA YA FUE CREADA");
-                        }else {
-                        JOptionPane.showMessageDialog(null, "INTENTE DE NUEVO, SUS DATOS NO ESTAN CORRECTOS");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "INTENTE DE NUEVO, SUS DATOS NO ESTAN CORRECTOS");
 
-                    }
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "NO OLVIDE QUE EL SUPER USUARIO DEBE ESTAR PRESENTE PARA CUALQUIER CAMBIO");
 
                     }
                 }
             }
-       }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
     private void verificacion(String respuesta_extraida, String respuesta) {
         //comprimir la respuesta que ingresa
@@ -642,23 +696,32 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         // TODO add your handling code here:
-        primernombre = jTextField2.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //primernombre = jTextField2.getText();
+            jTextField7.setText("");
+            jTextField7.requestFocus();
         }
+
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-        segundoapellido = jTextField1.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //segundoapellido = jTextField1.getText();
+            jTextField3.setText("");
+            jTextField3.requestFocus();
         }
+
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
         // TODO add your handling code here:
-        correo = jTextField4.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //correo = jTextField4.getText();
+            jPassword.setText("");
+            jPassword.requestFocus();
         }
+
     }//GEN-LAST:event_jTextField4KeyPressed
 
     private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
@@ -667,27 +730,37 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordKeyPressed
         // TODO add your handling code here:
-        //    String contraseña = new String(Password.getPassword());
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //String pass_concatenada="";
+            /*  char[] contraseña = jPassword.getPassword();
+            for (int i = 0; i < contraseña.length; i++) {
+                pass_concatenada1 = pass_concatenada1 + contraseña[i];
+                System.out.println(contraseña[i]);
+            }
+            System.out.println(pass_concatenada1);*/
+            jPassword1.requestFocus();
+        }
 
     }//GEN-LAST:event_jPasswordKeyPressed
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
         // TODO add your handling code here:
-        int dia = (int) jComboBox2.getSelectedItem();
-        Dia = dia;
+
+        // int dia = (int) jComboBox2.getSelectedItem();
+        //  Dia = dia;
 
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
-        String mes = (String) jComboBox1.getSelectedItem();
-        Mes = mes;
+        //   String mes = (String) jComboBox1.getSelectedItem();
+        //  Mes = mes;
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
         // TODO add your handling code here:
-        int año = (int) jComboBox3.getSelectedItem();
-        Año = año;
+        // int año = (int) jComboBox3.getSelectedItem();
+        //  Año = año;
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -696,10 +769,12 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
-       // jTextField3.getText();
-       dpi =jTextField3.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //dpi = jTextField3.getText();
+            jTextField4.setText("");
+            jTextField4.requestFocus();
         }
+
     }//GEN-LAST:event_jTextField3KeyPressed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -712,9 +787,12 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         // TODO add your handling code here:
-         primerapellido = jTextField5.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            // primerapellido = jTextField5.getText();
+            jTextField1.setText("");
+            jTextField1.requestFocus();
         }
+
     }//GEN-LAST:event_jTextField5KeyPressed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
@@ -723,14 +801,35 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
         // TODO add your handling code here:
-         segundonombre = jTextField7.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //segundonombre = jTextField7.getText();
+            jTextField5.setText("");
+            jTextField5.requestFocus();
         }
+
     }//GEN-LAST:event_jTextField7KeyPressed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jPassword1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassword1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            /*char[] contraseña = jPassword1.getPassword();
+            for (int i = 0; i < contraseña.length; i++) {
+                pass_concatenada2 = pass_concatenada2 + contraseña[i];
+                System.out.println(contraseña[i]);
+            }
+            System.out.println(pass_concatenada2);*/
+            jButton3.requestFocus();
+
+        }
+    }//GEN-LAST:event_jPassword1KeyPressed
+
+    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordActionPerformed
 
     /**
      * @param args the command line arguments
