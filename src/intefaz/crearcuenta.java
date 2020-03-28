@@ -623,7 +623,7 @@ public class crearcuenta extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "DESACTIVE EL RADIO BUTTON");
                             }
                         }
-                    } else {
+                    } else {//
                         JOptionPane.showMessageDialog(null, "DESACTIVE EL RADIO BUTTON");
                     }
                 }

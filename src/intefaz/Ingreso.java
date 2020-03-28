@@ -5,6 +5,7 @@
  */
 package intefaz;
 
+import Usuario.Compresor;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import sun.security.util.Password;
@@ -29,14 +30,16 @@ public class Ingreso extends javax.swing.JFrame {
         txtPassOculto.setVisible(true);
         txtPassVisible.setVisible(false);
     }
+
     public Ingreso(int numero_del_boton) {
         initComponents();
         this.setLocationRelativeTo(null);
         txtPassOculto.setVisible(true);
         txtPassVisible.setVisible(false);
-        boton_numero=numero_del_boton;
+        boton_numero = numero_del_boton;
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -266,25 +269,22 @@ public class Ingreso extends javax.swing.JFrame {
         if (usuario.equals("") || contraseña.equals("")) {
             JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
         }
-         //verificar que la cuenta exista y sea la correcta BD
+        //verificar que la cuenta exista y sea la correcta BD
 
-         if(boton_numero==1){
-         inventario i=new inventario();
-         i.setVisible(true);
-         dispose();
-        }
-        else if (boton_numero==2){
-        notaderesponsabilidad entrega = new notaderesponsabilidad();
-        entrega.setVisible(true);
-        dispose();
-        }
-         else if (boton_numero==3){
-        Colaborador xx = new Colaborador();
-        xx.setVisible(true);
-        dispose();
-        }
-         else if (boton_numero==4){
-        
+        if (boton_numero == 1) {
+            inventario i = new inventario();
+            i.setVisible(true);
+            dispose();
+        } else if (boton_numero == 2) {
+            notaderesponsabilidad entrega = new notaderesponsabilidad();
+            entrega.setVisible(true);
+            dispose();
+        } else if (boton_numero == 3) {
+            Colaborador xx = new Colaborador();
+            xx.setVisible(true);
+            dispose();
+        } else if (boton_numero == 4) {
+
         }
     }//GEN-LAST:event_jButtonsesionActionPerformed
 
@@ -334,14 +334,98 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void jButtonsesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsesion1ActionPerformed
         // TODO add your handling code here:
+        int seleccion1 = JOptionPane.showOptionDialog(
+                null,
+                "¿DESEA INICIAR EL CAMBIO DE CONTRASEÑA?",
+                "",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, // null para icono por defecto.
+                new Object[]{"Sí", "No", "Cancelar"}, // null para YES, NO y CANCEL
+                "Sí");
+
+        if (seleccion1 != -1) {
+            if (seleccion1 == 0) {
+                //ir a el area de aprobación por el super usuario
+                String dpi = (String) JOptionPane.showInputDialog("Ingrese su número de dpi");
+                String correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
+                //String contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña 
+                //buscar al super usuario, extraer datos y comparar
+                if (dpi.equals("987654321") && correo.equals("prueba1@gmail.com") /*&& contraseña.equals("1234abcd")*/) {
+                    //nopregunta = (int) (Math.random() * 5) + 1;
+                    // extraemos el numero de pregunta que le corresponde al usuario
+                    // y extraemos la respuesta
+                    String pregunta_extraida = "1", respuesta_extraida = "hola", respuesta = "";
+                    String p1 = "1";//=comprimir("¿Nombre de su primera mascota?");
+                    String p2 = comprimir("¿Nombre de su primmera maestra?");
+                    String p3 = comprimir("¿Cuál es su comida favorita?");
+                    String p4 = comprimir("¿Cuál es su pelicula favorita?");
+                    String p5 = comprimir("¿Cuál es su pasatiempo favorito?");
+                    // no se trendría que ver la pregunta, hay que descomprimir y mostrar 
+                    if (pregunta_extraida.equals(p1)) {
+                        respuesta = (String) JOptionPane.showInputDialog("¿Nombre de su primera mascota?");
+                        generar_actualizacion(respuesta_extraida, respuesta);
+                    } else if (pregunta_extraida.equals(p2)) {
+                        respuesta = (String) JOptionPane.showInputDialog("¿Nombre de su primmera maestra?");
+                        generar_actualizacion(respuesta_extraida, respuesta);
+
+                    } else if (pregunta_extraida.equals(p3)) {
+                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su comida favorita?");
+                        generar_actualizacion(respuesta_extraida, respuesta);
+
+                    } else if (pregunta_extraida.equals(p4)) {
+                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su pelicula favorita?");
+                        generar_actualizacion(respuesta_extraida, respuesta);
+
+                    } else if (pregunta_extraida.equals(p5)) {
+                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su pasatiempo favorito?");
+                        generar_actualizacion(respuesta_extraida, respuesta);
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "DEBE INGRESAR CORRECTAMENTE LO QUE SE LE SOLICITA");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "ESTAMOS A SUS ORDENES");
+            }
+        }
 
 
     }//GEN-LAST:event_jButtonsesion1ActionPerformed
+    private void mostrar_formulario_confirmacion() {
+        confirmacion confirmacion = new confirmacion();
+        confirmacion.setVisible(true);
+        dispose();
+    }
 
+    private void generar_actualizacion(String respuesta_extraida, String respuesta) {
+        String resp = comprimir(respuesta);
+        if (respuesta_extraida.equals(resp)) {
+            String pp= (String) JOptionPane.showInputDialog("Ingrese la nueva contraseña");
+            String pc= (String) JOptionPane.showInputDialog("Confirme la contraseña");
+
+            String pass_principal =comprimir(pp);
+            String pass_confirmacion =comprimir(pp);
+            if (pass_principal.equals(pass_confirmacion)){
+                            //actualizar datos de esta persona
+            JOptionPane.showMessageDialog(null, "SU CONTRASEÑA SE ACTUALIZO CON EXITO");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO FUE LA RESPUESTA CORRECTA, DEBE INICIAR CON EL TRAMITE");
+        }
+    }
+
+    private String comprimir(String frase) {
+        Compresor compresor = new Compresor();
+        String Cadena_en_binario = compresor.CodigoAscii_a_binario(frase);
+        String cadena_simple = compresor.cadena_RLE(Cadena_en_binario);
+        String ultima_cadena = compresor.rle_a_Ascii(cadena_simple);
+        return ultima_cadena;
+    }
     private void jButtonsesion1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonsesion1MouseClicked
         // TODO add your handling code here:
         //buscar el número de pregunta de x usuario y comparar su resputa
-        nopregunta = (int) (Math.random() * 6) + 1;
+        /*  nopregunta = (int) (Math.random() * 6) + 1;
         //return numerodado;
         if (nopregunta == 1) {
             pregunta = (String) JOptionPane.showInputDialog("¿Nombre de su primera mascota?");
@@ -359,7 +443,7 @@ public class Ingreso extends javax.swing.JFrame {
             pregunta = (String) JOptionPane.showInputDialog("¿Cuál es su pasatiempo favorito");
             verificacion("hola", pregunta);
 
-        }
+        }*/
 
     }//GEN-LAST:event_jButtonsesion1MouseClicked
     private void verificacion(String respuesta_extraida, String respuesta) {

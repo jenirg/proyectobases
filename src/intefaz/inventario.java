@@ -17,7 +17,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +31,7 @@ public class inventario extends javax.swing.JFrame {
     String nombre = "", unidad = "", descripcion = "", otra_procedecia = "";
     int clave, cantidad, valor_unitario;
     CRUD miCrud = new CRUD();
+    int [] las_series;
 
     /**
      * Creates new form inventario
@@ -40,9 +44,9 @@ public class inventario extends javax.swing.JFrame {
         Date Fechaactual = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-YYYY");
         fecha.setText(formato.format(Fechaactual));
-        jButton1.setVisible(false);
-        jButton5.setVisible(false);
-
+        //jButton1.setVisible(false);
+        //jButton5.setVisible(false);
+        jTextField11.setEnabled(false);
         // dispose();
     }
 
@@ -87,7 +91,6 @@ public class inventario extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -99,7 +102,6 @@ public class inventario extends javax.swing.JFrame {
         jTextField11 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jRadioButton4 = new javax.swing.JRadioButton();
-        jButton5 = new javax.swing.JButton();
 
         jInternalFrame1.setVisible(true);
 
@@ -169,20 +171,20 @@ public class inventario extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("UNIDAD:");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 102));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("GENERAR FACTURA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jRadioButton2.setBackground(new java.awt.Color(0, 102, 255));
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton2.setText("OTRA");
+        jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton2MouseClicked(evt);
+            }
+        });
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(255, 51, 51));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -234,6 +236,7 @@ public class inventario extends javax.swing.JFrame {
         fecha.setText("FECHA");
 
         jTextField11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField11.setEnabled(false);
         jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField11KeyPressed(evt);
@@ -254,14 +257,15 @@ public class inventario extends javax.swing.JFrame {
         jRadioButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jRadioButton4.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton4.setText("COMPRA");
-
-        jButton5.setBackground(new java.awt.Color(255, 51, 51));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("GUARDAR");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton4.setAutoscrolls(true);
+        jRadioButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton4MouseClicked(evt);
+            }
+        });
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jRadioButton4ActionPerformed(evt);
             }
         });
 
@@ -292,10 +296,7 @@ public class inventario extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,8 +312,7 @@ public class inventario extends javax.swing.JFrame {
                                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton1))))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -360,22 +360,14 @@ public class inventario extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel10)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -447,8 +439,8 @@ public class inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             descripcion = jTextField2.getText();
-            jTextField11.setText("");
-            jTextField11.requestFocus();
+            //jTextField11.setText("");
+            //jTextField11.requestFocus();
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
@@ -467,11 +459,6 @@ public class inventario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTextField11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -482,29 +469,136 @@ public class inventario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        jButton1.setVisible(true);
-        jButton5.setVisible(true);
+        nombre = jTextField1.getText();
+        unidad = jTextField8.getText();
+        String text9 = jTextField9.getText();
+        String text10 = jTextField10.getText();
+        if (descripcion.equals("")) {
+            descripcion = jTextField2.getText();
+        }
+        otra_procedecia = jTextField11.getText();
+        Boolean otra = jRadioButton2.isSelected();
+        Boolean compra = jRadioButton4.isSelected();
+        System.out.println("otra " + otra);
+        System.out.println("compra" + compra);
+        if (nombre.equals("") || unidad.equals("") || text9.equals("") || text10.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ha dejado algun campo vacio, el proceso no puede continuar, verifique los datos");
+
+        } else if (descripcion.equals("")) {
+            int seleccion = JOptionPane.showOptionDialog(
+                    null,
+                    "¿No le quiere agregar descripción?",
+                    "",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, // null para icono por defecto.
+                    new Object[]{"Sí", "No"}, // null para YES, NO y CANCEL
+                    "Sí");
+
+            if (seleccion != -1) {
+                if (seleccion == 0) {
+                    jTextField2.requestFocus();
+                } else {
+                    descripcion = "SIN DESCRIPCIÓN";
+                }
+            }
+        } else if ((!otra && !compra)) {
+            JOptionPane.showMessageDialog(null, "Debe especificar la procedencia del producto");
+
+        } else if (otra) {
+            if (otra_procedecia.equals("")) {
+                JOptionPane.showMessageDialog(null, "Especifique el nombre de la otra procedencia");
+            }  else {
+            cantidad = Integer.parseInt(text9);
+            valor_unitario = Integer.parseInt(text10);
+            int cont=1;
+            for (int i = 0; i < cantidad; i++) {
+                cont++;
+                String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
+                try {
+                    miCrud.Insertar_serie(serie);
+                    //miCrud.Insertar_registro(nombre, cantidad, marca, nombre, otra_procedecia, serie, TOP_ALIGNMENT, LEFT_ALIGNMENT, HEIGHT);
+                    //guardar serie
+                    // guardar el producto en el registro
+                } catch (SQLException ex) {
+                    Logger.getLogger(inventario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            System.out.println("nombre" + nombre);
+            System.out.println("unidad" + unidad);
+            System.out.println("cantidad " + cantidad);
+            System.out.println("valor unitario " + valor_unitario);
+            System.out.println("descripcion" + descripcion);
+            System.out.println("otra " + otra);
+            System.out.println("compra" + compra);
+            System.out.println("otra procedencia " + otra_procedecia);
+            //jButton1.setVisible(true);
+            //jButton5.setVisible(true);
+            Forma57 yy = new Forma57();
+            yy.setVisible(true);
+        }
+        }  else if (compra) {
+            cantidad = Integer.parseInt(text9);
+            valor_unitario = Integer.parseInt(text10);
+            int cont=1;
+            for (int i = 0; i < cantidad; i++) {
+                cont++;
+                String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
+                //guardar serie
+                //guardar el producto en registro
+            }
+            //insertarmos datos en el registro
+            System.out.println("nombre" + nombre);
+            System.out.println("unidad" + unidad);
+            System.out.println("cantidad " + cantidad);
+            System.out.println("valor unitario " + valor_unitario);
+            System.out.println("descripcion" + descripcion);
+            System.out.println("otra " + otra);
+            System.out.println("compra" + compra);
+            System.out.println("otra procedencia " + otra_procedecia);
+            //jButton1.setVisible(true);
+            //jButton5.setVisible(true);
+            Forma57 yy = new Forma57();
+            yy.setVisible(true);
+        
+        } 
+      
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
-        nombre = jTextField1.getText();
-        unidad = jTextField8.getText();
-        cantidad = Integer.parseInt(jTextField9.getText());
-        valor_unitario = Integer.parseInt(jTextField10.getText());
-        descripcion = jTextField2.getText();
-        otra_procedecia = jTextField11.getText();
-        System.out.println("nombre" + nombre);
-        System.out.println("unidad" + unidad);
-        System.out.println("cantidad " + cantidad);
-        System.out.println("valor unitario " + valor_unitario);
-        System.out.println("descripcion" + descripcion);
-        System.out.println("otra procedencia " + otra_procedecia);
-        //verificacion de que todos los valores esten llenos
-        Forma57 yy = new Forma57();
-        yy.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+        Boolean otra = jRadioButton2.isSelected();
+        if (otra) {
+            jTextField11.setVisible(true);
+            jTextField11.setEnabled(true);
+            jRadioButton4.setSelected(false);
+            System.out.println(jRadioButton4.isSelected());
+        }
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jRadioButton2MouseClicked
+
+    private void jRadioButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton4MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jRadioButton4MouseClicked
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        // TODO add your handling code here:
+        Boolean compra = jRadioButton4.isSelected();
+        if (compra) {
+            jTextField11.setVisible(false);
+            jRadioButton2.setSelected(false);
+            System.out.println(jRadioButton2.isSelected());
+
+        }
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -543,11 +637,9 @@ public class inventario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fecha;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

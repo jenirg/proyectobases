@@ -7,6 +7,7 @@ package Clases;
 
 import conexion.ConexionBD;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
@@ -129,4 +130,5 @@ public class CRUD {
             JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
         }      // TODO 
     }
+   
 }
