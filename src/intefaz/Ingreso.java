@@ -19,6 +19,7 @@ public class Ingreso extends javax.swing.JFrame {
     int numerodpi, nopregunta, p1, p2, p3, p4, p5, boton_numero;
     String pregunta, correo = "", contraseña = "", usuario = "";
     Password contraseña3;
+    String pass_concatenada;
     public boolean ver = true;
 
     /**
@@ -262,18 +263,19 @@ public class Ingreso extends javax.swing.JFrame {
 
     private void jButtonsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsesionActionPerformed
         // TODO add your handling code here:
-        usuario = jTextFieldUser.getText();
+        /*usuario = jTextFieldUser.getText();
         System.out.println("1 Usuario" + usuario);
         char[] contraseña = txtPassOculto.getPassword();
-        System.out.println("2 Contraseña" + contraseña);
-        if (usuario.equals("") || contraseña.equals("")) {
+        System.out.println("2 Contraseña" + contraseña);*/
+        if (usuario.equals("") || pass_concatenada.equals("")) {
             JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
-        }
+        }else{
+            if (usuario.equals("prueba@gmail.com")&&pass_concatenada.equals("1234abcd")){
         //verificar que la cuenta exista y sea la correcta BD
-
+                System.out.println("si es igual la contraseña y usuario");
         if (boton_numero == 1) {
-            inventario i = new inventario();
-            i.setVisible(true);
+            inventario inventario = new inventario();
+            inventario.setVisible(true);
             dispose();
         } else if (boton_numero == 2) {
             notaderesponsabilidad entrega = new notaderesponsabilidad();
@@ -285,6 +287,12 @@ public class Ingreso extends javax.swing.JFrame {
             dispose();
         } else if (boton_numero == 4) {
 
+        }
+            }
+            else {
+            JOptionPane.showMessageDialog(null, "SUS DATOS NO SON CORRECTOS");
+            
+            }
         }
     }//GEN-LAST:event_jButtonsesionActionPerformed
 
@@ -311,13 +319,13 @@ public class Ingreso extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String pass_concatenada = "";
+            pass_concatenada = "";
             char[] contraseña = txtPassOculto.getPassword();
             for (int i = 0; i < contraseña.length; i++) {
                 pass_concatenada = pass_concatenada + contraseña[i];
                 System.out.println(contraseña[i]);
             }
-            System.out.println(pass_concatenada);
+            System.out.println("pass   "+pass_concatenada);
             //contraseña= txtPassOculto.getPassword();
             //contraseña3=txtPassOculto.getPassword();
             //String contraseña_SU = (String) txtPassOculto.getPassword();

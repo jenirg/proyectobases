@@ -25,11 +25,12 @@ public class Intefaz {
      */
     public static void main(String[] args) throws SQLException {
 
-        Compresor compresor = new Compresor();
+       /* Compresor compresor = new Compresor();
         String Cadena_en_binario = compresor.CodigoAscii_a_binario("prueba");
         String cadena_simple = compresor.cadena_RLE(Cadena_en_binario);
         String ultima_cadena = compresor.rle_a_Ascii(cadena_simple);
-        System.out.println("final    " + ultima_cadena);
+        System.out.println("final    " + ultima_cadena);*/
+        System.out.println("holaaaaaaaaaaaaaaaaa");
         //CRUD miCrud = new CRUD();
         //Date fechaDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-06");
         //miCrud.Insertar("compu",4, "Lucas");

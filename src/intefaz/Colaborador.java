@@ -154,6 +154,11 @@ public class Colaborador extends javax.swing.JFrame {
         });
 
         jButton4.setText("+");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Area administrativa", "Gerente", " ", " " }));
         jComboBox3.addItemListener(new java.awt.event.ItemListener() {
@@ -163,6 +168,11 @@ public class Colaborador extends javax.swing.JFrame {
         });
 
         jButton5.setText("+");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -368,6 +378,18 @@ public class Colaborador extends javax.swing.JFrame {
         String dependencia = (String) jComboBox3.getSelectedItem();
         Dependencia = dependencia;
     }//GEN-LAST:event_jComboBox3ItemStateChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        agregarpuesto yy = new agregarpuesto();
+         yy.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        agregardeendencia yy = new agregardeendencia();
+         yy.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

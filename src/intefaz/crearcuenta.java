@@ -1,10 +1,14 @@
 package intefaz;
 
 //import com.sun.glass.events.KeyEvent;
+import Clases.CRUD;
 import Usuario.Almacen_Pass;
 import Usuario.Compresor;
 import Usuario.Pregunta;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import sun.security.util.Password;
@@ -19,7 +23,7 @@ public class crearcuenta extends javax.swing.JFrame {
     int Dia = 0, Año = 0;
     int nopregunta = 0;
     String pass_concatenada1 = "", pass_concatenada2 = "";
-
+    CRUD miCrud=new CRUD();
     /**
      * Creates new form crearcuenta
      */
@@ -30,8 +34,7 @@ public class crearcuenta extends javax.swing.JFrame {
     }
 
     public void dependencias() {
-
-        dependencia.addItem(letra);
+        jComboBox4.addItem(otradependencia);
     }
 
     /**
@@ -62,7 +65,6 @@ public class crearcuenta extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        dependencia = new javax.swing.JComboBox<>();
         jTextField6 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jPassword = new javax.swing.JPasswordField();
@@ -74,6 +76,8 @@ public class crearcuenta extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -215,8 +219,6 @@ public class crearcuenta extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Dependencia:");
 
-        dependencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidad Regional Administrativa" }));
-
         jTextField6.setBackground(new java.awt.Color(153, 153, 255));
         jTextField6.setText("otra dependencia");
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
@@ -323,59 +325,67 @@ public class crearcuenta extends javax.swing.JFrame {
             }
         });
 
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidad Regional Administrativa" }));
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton4.setText("AGREGAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(82, 82, 82)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3))
+                        .addComponent(jRadioButton1))
+                    .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(82, 82, 82)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel11))
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(dependencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton3)
-                                        .addComponent(jRadioButton1)))))
-                        .addGap(0, 74, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 138, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,17 +438,22 @@ public class crearcuenta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dependencia, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jRadioButton1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton1))))
                 .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4))
                     .addComponent(jButton3))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -498,20 +513,25 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
+        
 
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //la_dependencia = jTextField6.getText();
+           otradependencia = jTextField6.getText();
             //  jTextField7.setText("");
             //jTextField7.requestFocus();
         }
+        
     }//GEN-LAST:event_jTextField6KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        Mes = (String) jComboBox1.getSelectedItem();
+        String dia= (String) jComboBox2.getSelectedItem();
+        String año=(String) jComboBox3.getSelectedItem();
         pass_concatenada1 = "";
         pass_concatenada2 = "";
         primernombre = jTextField2.getText();
@@ -519,8 +539,9 @@ public class crearcuenta extends javax.swing.JFrame {
         primerapellido = jTextField5.getText();
         segundoapellido = jTextField1.getText();
         dpi = jTextField3.getText();
+         otradependencia = jTextField6.getText();
         correo = jTextField4.getText();
-        la_dependencia = (String) dependencia.getSelectedItem();
+        la_dependencia = (String) jComboBox4.getSelectedItem();
         char[] contraseña1 = jPassword.getPassword();
         for (int i = 0; i < contraseña1.length; i++) {
             pass_concatenada1 = pass_concatenada1 + contraseña1[i];
@@ -541,9 +562,13 @@ public class crearcuenta extends javax.swing.JFrame {
         System.out.println("2 apelldio  " + segundoapellido);
         System.out.println("No DPI " + dpi);
         System.out.println("correo " + correo);
-        System.out.println("depedencia " + dependencia);
+        System.out.println("depedencia " + la_dependencia);
         System.out.println("pass1 " + pass_concatenada1);
         System.out.println("pass2 " + pass_concatenada2);
+        System.out.println("OTRA DEPENDENCIA:"+ otradependencia);
+        System.out.println("Mes:"+Mes);
+        System.out.println("Dia:"+dia);
+        System.out.println("Año:"+año);
         int compatible = pass_concatenada1.compareTo(pass_concatenada2);
         System.out.println("compatible  " + compatible);
         if (primernombre.equals("") || dpi.equals("") || segundonombre.equals("") || primerapellido.equals("") || segundoapellido.equals("") || correo.equals("") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/ || pass_concatenada2.equals("") || pass_concatenada1.equals("") || la_dependencia.equals("")) {
@@ -587,31 +612,35 @@ public class crearcuenta extends javax.swing.JFrame {
                                 //ir a el area de aprobación por el super usuario
                                 String dpi = (String) JOptionPane.showInputDialog("Ingrese su número de dpi");
                                 String correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
-                                String contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña 
+                                //String contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña 
+                                ingresodecontrasena yy = new ingresodecontrasena();
+                                yy.setVisible(true);
                                 //buscar al super usuario, extraer datos y comparar
                                 if (dpi.equals("123456789") && correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
-                                    nopregunta = (int) (Math.random() * 5) + 1;
-                                    // extraemos el numero de pregunta que le corresponde al super usuario antiguo
-                                    // y extraemos la respuesta
-                                    String pregunta_extraida = "", respuesta_extraida = "hola", respuesta = "";
-
-                                    if (nopregunta == 1) {
-                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Nombre de su primera mascota?");
+                                    String pregunta_extraida = "1", respuesta_extraida = "hola", respuesta = "";
+                                    String p1 = "1";//=comprimir("¿Nombre de su primera mascota?");
+                                    String p2 = comprimir("¿Nombre de su primmera maestra?");
+                                    String p3 = comprimir("¿Cuál es su comida favorita?");
+                                    String p4 = comprimir("¿Cuál es su pelicula favorita?");
+                                    String p5 = comprimir("¿Cuál es su pasatiempo favorito?");
+                                    // no se trendría que ver la pregunta, hay que descomprimir y mostrar 
+                                    if (pregunta_extraida.equals(p1)) {
+                                        respuesta = (String) JOptionPane.showInputDialog("¿Nombre de su primera mascota?");
                                         verificacion(respuesta_extraida, respuesta);
-                                    } else if (nopregunta == 2) {
-                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Nombre de su primmera maestra?");
-                                        verificacion(respuesta_extraida, respuesta);
-
-                                    } else if (nopregunta == 3) {
-                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Cuál es su comida favorita?");
+                                    } else if (pregunta_extraida.equals(p2)) {
+                                        respuesta = (String) JOptionPane.showInputDialog("¿Nombre de su primmera maestra?");
                                         verificacion(respuesta_extraida, respuesta);
 
-                                    } else if (nopregunta == 4) {
-                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Cuál es su pelicula favorita?");
+                                    } else if (pregunta_extraida.equals(p3)) {
+                                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su comida favorita?");
                                         verificacion(respuesta_extraida, respuesta);
 
-                                    } else if (nopregunta == 5) {
-                                        respuesta = (String) JOptionPane.showInputDialog("RESPONDA DE FORMA CORRECTA PORQUE SOLO TIENE UNA OPORTUNIDAD, SI SU RESPUESTA ES INCONRRECTA TODO EL PROCESO SE REINICIA", "¿Cuál es su pasatiempo favorito");
+                                    } else if (pregunta_extraida.equals(p4)) {
+                                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su pelicula favorita?");
+                                        verificacion(respuesta_extraida, respuesta);
+
+                                    } else if (pregunta_extraida.equals(p5)) {
+                                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su pasatiempo favorito?");
                                         verificacion(respuesta_extraida, respuesta);
 
                                     }
@@ -643,10 +672,34 @@ public class crearcuenta extends javax.swing.JFrame {
                     if (seleccion3 == 0) {
                         //buscar al super usuario, extraer datos y comparar
 
-                        correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
-                        contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña
-                        if (correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
-                            // eliminar al super usario actual y guardar al nuevo
+                        String correo1 = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
+                      //  String lacontraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña
+                      ingresodecontrasena yy = new ingresodecontrasena();
+                                yy.setVisible(true);
+                               String lacontraseña = yy.getContraseña();
+                      if (correo1.equals("prueba@gmail.com") && lacontraseña.equals("1234abcd")) {
+                           /* try {
+                                miCrud.Insertar_dependencia(la_dependencia);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            try {
+                                miCrud.Insertar_puesto("En esta dependencia no importa");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            boolean superu=jRadioButton1.isSelected();
+                            try {
+                                miCrud.Insertar_usuario(dpi,null,correo,contraseña,superu,1,2);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            try {
+                                miCrud.Insertar_nombre_apellido(primernombre, segundonombre, primerapellido, segundoapellido, 4);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
+                            }*/
                             JOptionPane.showMessageDialog(null, "LA CUENTA YA FUE CREADA");
                         } else {
                             JOptionPane.showMessageDialog(null, "INTENTE DE NUEVO, SUS DATOS NO ESTAN CORRECTOS");
@@ -660,6 +713,14 @@ public class crearcuenta extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+    private String comprimir(String frase) {
+        Compresor compresor = new Compresor();
+        String Cadena_en_binario = compresor.CodigoAscii_a_binario(frase);
+        String cadena_simple = compresor.cadena_RLE(Cadena_en_binario);
+        String ultima_cadena = compresor.rle_a_Ascii(cadena_simple);
+        return ultima_cadena;
+    }
+
     private void verificacion(String respuesta_extraida, String respuesta) {
         //comprimir la respuesta que ingresa
         if (respuesta_extraida.equals(respuesta)) {
@@ -691,7 +752,7 @@ public class crearcuenta extends javax.swing.JFrame {
         }
     }
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+      // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
@@ -831,6 +892,14 @@ public class crearcuenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+         otradependencia = jTextField6.getText();
+         jComboBox4.addItem(otradependencia);
+         jTextField6.setText("");
+         jTextField6.requestFocus();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -870,13 +939,14 @@ public class crearcuenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> dependencia;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
