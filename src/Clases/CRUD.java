@@ -44,7 +44,7 @@ public class CRUD {
 
                 JOptionPane.showMessageDialog(null, "REGISTRO INGRESADO CON ÉXITO");
             }
-            miConexion.close();
+            //miConexion.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
         }      // TODO 
@@ -58,7 +58,7 @@ public class CRUD {
 
                 JOptionPane.showMessageDialog(null, "SERIE INGRESADA CON ÉXITO");
             }
-            miConexion.close();
+            //miConexion.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO LA SERIE");
         }      
@@ -130,5 +130,7 @@ public class CRUD {
             JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
         }      // TODO 
     }
-   
+   public void getconexion() throws SQLException{
+        miConexion.close();
+   }
 }

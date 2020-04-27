@@ -550,7 +550,9 @@ public class inventario extends javax.swing.JFrame {
                     String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
                     try {
                         miCrud.Insertar_serie(serie);
-                        //miCrud.Insertar_registro(nombre, cantidad, marca, nombre, otra_procedecia, serie, TOP_ALIGNMENT, LEFT_ALIGNMENT, HEIGHT);
+                        miCrud.Insertar_registro(nombre, cantidad, marca, nombre, otra_procedecia, serie, TOP_ALIGNMENT, LEFT_ALIGNMENT, HEIGHT);
+                        miCrud.getconexion();
+
                         //guardar serie
                         // guardar el producto en el registro
                     } catch (SQLException ex) {

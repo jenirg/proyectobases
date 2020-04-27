@@ -23,12 +23,14 @@ public class ConexionBD {
       
         try
         {
+           // jdbc:mysql://localhost:3306/bdhospital?zeroDateTimeBehavior=convertToNull
             Class.forName("com.mysql.jdbc.Driver");
             String servidor = "jdbc:mysql://localhost/conexion";
             String usuarioDB="root";
             String passwordDB="1234";
             conexion= DriverManager.getConnection(servidor,usuarioDB,passwordDB);
             JOptionPane.showMessageDialog(null, "SI CONECTO");
+            return conexion;
         }
         catch(ClassNotFoundException ex)
         {
