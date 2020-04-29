@@ -653,7 +653,8 @@ public class inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
              marca = jTextField10.getText();
-            
+             jTextField12.setText("");
+            jTextField12.requestFocus();
         }
     }//GEN-LAST:event_jTextField13KeyPressed
 

@@ -61,6 +61,7 @@ public class CRUD {
             //miConexion.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO LA SERIE");
+            System.out.println(e);
         }      
     }
     public void Insertar_puesto(String el_puesto) throws SQLException {

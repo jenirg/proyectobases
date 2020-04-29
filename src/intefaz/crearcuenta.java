@@ -84,6 +84,11 @@ public class crearcuenta extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 102));
         jPanel1.setFocusable(false);
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Britannic Bold", 0, 36)); // NOI18N
@@ -260,6 +265,9 @@ public class crearcuenta extends javax.swing.JFrame {
         jPassword1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPassword1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPassword1KeyReleased(evt);
             }
         });
 
@@ -758,7 +766,7 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //primernombre = jTextField2.getText();
+            primernombre = jTextField2.getText();
             jTextField7.setText("");
             jTextField7.requestFocus();
         }
@@ -768,7 +776,7 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //segundoapellido = jTextField1.getText();
+            segundoapellido = jTextField1.getText();
             jTextField3.setText("");
             jTextField3.requestFocus();
         }
@@ -778,7 +786,7 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //correo = jTextField4.getText();
+            correo = jTextField4.getText();
             jPassword.setText("");
             jPassword.requestFocus();
         }
@@ -807,21 +815,21 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
         // TODO add your handling code here:
 
-        // int dia = (int) jComboBox2.getSelectedItem();
-        //  Dia = dia;
+        int dia = (int) jComboBox2.getSelectedItem();
+        Dia = dia;
 
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
-        //   String mes = (String) jComboBox1.getSelectedItem();
-        //  Mes = mes;
+        String mes = (String) jComboBox1.getSelectedItem();
+        Mes = mes;
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
         // TODO add your handling code here:
-        // int año = (int) jComboBox3.getSelectedItem();
-        //  Año = año;
+        int año = (int) jComboBox3.getSelectedItem();
+         Año = año;
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -831,7 +839,7 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //dpi = jTextField3.getText();
+            dpi = jTextField3.getText();
             jTextField4.setText("");
             jTextField4.requestFocus();
         }
@@ -849,7 +857,7 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            // primerapellido = jTextField5.getText();
+            primerapellido = jTextField5.getText();
             jTextField1.setText("");
             jTextField1.requestFocus();
         }
@@ -877,6 +885,9 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jPassword1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassword1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if(pass_concatenada1==pass_concatenada2){
+                 JOptionPane.showMessageDialog(null, "LA CONTRASEÑA NO ES IGUA A LA ANTERIOR");
+            }
             /*char[] contraseña = jPassword1.getPassword();
             for (int i = 0; i < contraseña.length; i++) {
                 pass_concatenada2 = pass_concatenada2 + contraseña[i];
@@ -899,6 +910,14 @@ public class crearcuenta extends javax.swing.JFrame {
          jTextField6.setText("");
          jTextField6.requestFocus();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jPassword1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassword1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPassword1KeyReleased
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel1KeyPressed
 
     /**
      * @param args the command line arguments
