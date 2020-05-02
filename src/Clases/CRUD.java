@@ -35,6 +35,19 @@ public class CRUD {
         }      // TODO 
 
     }
+    public void Insertar_nota_responsabilidad(String numero, String per_instala, String per_recibe, String ubica) throws SQLException{
+        try{
+            try(Statement statement = (Statement) miConexion.createStatement()) {
+                statement.execute("INSERT INTO nota_responsabilidad(no,persona_instala, persona_recibe, ubicacion)  VALUES('" +  numero+ "'," + per_instala+ "','" + per_recibe +"','" + ubica+ "')");
+
+                JOptionPane.showMessageDialog(null, "ENTREGA INGRESADA CON ÉXITO");
+            }
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
+        }      // TODO 
+    }
+    
+    
 
     public void Insertar_registro(String dispositivo, int cantidad, String marca, String modelo, String procedencia, String descripcion, float total_monetario, float precio_unitario, int serie_id) throws SQLException {
         //No se esta incluyendo la imagen
