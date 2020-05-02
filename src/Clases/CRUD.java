@@ -6,6 +6,7 @@
 package Clases;
 
 import conexion.ConexionBD;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,8 +19,7 @@ import javax.swing.JOptionPane;
  * @author dell
  */
 public class CRUD {
-
-    Connection miConexion = (Connection) ConexionBD.GetConnection();
+ Connection miConexion = (Connection) ConexionBD.GetConnection();
 
     public void Insertar_entrega(String v_dispo, int v_cant, String v_persona) throws SQLException {
 
@@ -33,15 +33,15 @@ public class CRUD {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO ENTREGA");
         }      // TODO 
+
     }
 
-    public void Insertar_registro(String dispositivo, int cantidad, String marca, String modelo, String procedencia, String imagen, float total_monetario, float precio_unitario, int serie_id) throws SQLException {
-
+    public void Insertar_registro(String dispositivo, int cantidad, String marca, String modelo, String procedencia, String descripcion, float total_monetario, float precio_unitario, int serie_id) throws SQLException {
+        //No se esta incluyendo la imagen
         try {
             try (Statement statement = (Statement) miConexion.createStatement()) {
-                statement.execute("INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,imagen,total_monetario,precio_unitario,serie_id)  VALUES('"
-                        + dispositivo + "'," + cantidad + ",'" + marca + "','" + modelo + "','" + procedencia + "','" + imagen + "'," + total_monetario + "," + precio_unitario + "," + serie_id + ")");
-
+                statement.execute("INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,descripcion,total_monetario,precio_unitario,serie_id)  VALUES('"
+                + dispositivo + "'," + cantidad + ",'" + marca + "','" + modelo + "','" + procedencia + "','" + descripcion + "'," + total_monetario + "," + precio_unitario + "," + serie_id + ")");
                 JOptionPane.showMessageDialog(null, "REGISTRO INGRESADO CON ÉXITO");
             }
             //miConexion.close();
@@ -134,4 +134,18 @@ public class CRUD {
    public void getconexion() throws SQLException{
         miConexion.close();
    }
+ public static void IngresarRegistro(Connection con,String dispositivo,int cantidad,String marca, String modelo,String procedencia,String descripcion,float total_monetario, float precio_unitario) throws SQLException { 
+    try(CallableStatement cstmt = con.prepareCall("{call conexion.InsertarRegistro(?, ?, ? ,? ,?, ?, ? ,? )}"); ) {  
+        cstmt.setString(1,dispositivo);
+        cstmt.setInt(2,cantidad );
+        cstmt.setString(3,marca);
+        cstmt.setString(4,modelo);
+        cstmt.setString(5,procedencia);
+        cstmt.setString(6,descripcion);
+        cstmt.setFloat(7,total_monetario);
+        cstmt.setFloat(8,precio_unitario);
+        cstmt.execute();  
+        System.out.println("Ingreso correcto");  
+    }  
+    }
 }

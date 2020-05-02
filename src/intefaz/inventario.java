@@ -6,11 +6,13 @@
 package intefaz;
 
 import Clases.CRUD;
+import conexion.ConexionBD;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,10 +30,12 @@ import javax.swing.JOptionPane;
  */
 public class inventario extends javax.swing.JFrame {
 
-    String nombre = "", unidad = "", descripcion = "", otra_procedecia = "",modelo="", marca="";
-    int clave, cantidad, valor_unitario;
+    String nombre = "", unidad = "", descripcion = "", otra_procedecia = "", modelo = "", marca = "";
+    int clave, cantidad,cont;
+    float total_monetario , valor_unitario;
     CRUD miCrud = new CRUD();
     int[] las_series;
+    Connection miConexion = (Connection) ConexionBD.GetConnection();
 
     /**
      * Creates new form inventario
@@ -501,23 +505,34 @@ public class inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField11KeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
         // TODO add your handling code here:
-        nombre = jTextField1.getText();
-        unidad = jTextField8.getText();
-        String text9 = jTextField9.getText();
-        String text10 = jTextField10.getText();
-        if (descripcion.equals("")) {
+        if (descripcion.equals("SIN DESCRIPCIÓN")) {
+            descripcion = "SIN DESCRIPCIÓN";
+        } else {
             descripcion = jTextField2.getText();
         }
+        nombre = jTextField1.getText();
+        // unidad = jTextField8.getText();
+        String text9 = jTextField9.getText();
+        String text10 = jTextField10.getText();
+        total_monetario = Float.parseFloat(jTextField10.getText());
+        otra_procedecia = jTextField11.getText();
+        //descripcion = jTextField2.getText();
+        cantidad = Integer.parseInt(jTextField9.getText());
+        modelo = jTextField12.getText();
+        marca = jTextField13.getText();
+        nombre = jTextField1.getText();
+
         otra_procedecia = jTextField11.getText();
         Boolean otra = jRadioButton2.isSelected();
         Boolean compra = jRadioButton4.isSelected();
         System.out.println("otra " + otra);
         System.out.println("compra" + compra);
-        if (nombre.equals("") || unidad.equals("") || text9.equals("") || text10.equals("")) {
+        if (nombre.equals("") || text9.equals("") || text10.equals("")) {
             JOptionPane.showMessageDialog(null, "Ha dejado algun campo vacio, el proceso no puede continuar, verifique los datos");
 
-        } else if (descripcion.equals("")) {
+        } else if (descripcion.equals("") || descripcion.isEmpty()) {
             int seleccion = JOptionPane.showOptionDialog(
                     null,
                     "¿No le quiere agregar descripción?",
@@ -542,56 +557,76 @@ public class inventario extends javax.swing.JFrame {
             if (otra_procedecia.equals("")) {
                 JOptionPane.showMessageDialog(null, "Especifique el nombre de la otra procedencia");
             } else {
-                cantidad = Integer.parseInt(text9);
-                valor_unitario = Integer.parseInt(text10);
-                int cont = 1;
-                for (int i = 0; i < cantidad; i++) {
-                    cont++;
-                    String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
-                    try {
-                        miCrud.Insertar_serie(serie);
-                        miCrud.Insertar_registro(nombre, cantidad, marca, nombre, otra_procedecia, serie, TOP_ALIGNMENT, LEFT_ALIGNMENT, HEIGHT);
-                        miCrud.getconexion();
+                //cantidad = Integer.parseInt(text9);
+                System.out.println("Cantidad" + cantidad);
+                valor_unitario = total_monetario / cantidad;
+                //for (int i = 0; i < cantidad; i++) {
+                //if (cont<=cantidad){
+                String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
+                try {
+                    miCrud.Insertar_serie(serie);
+                    miCrud.IngresarRegistro(miConexion, nombre, cantidad, marca, modelo, otra_procedecia, descripcion, total_monetario, valor_unitario);
+                    miCrud.getconexion();
+                    //miCrud.Insertar_registro(nombre, cantidad, marca, modelo, otra_procedecia, descripcion, total_monetario, valor_unitario, );
+                    //miCrud.getconexion();
 
-                        //guardar serie
-                        // guardar el producto en el registro
-                    } catch (SQLException ex) {
-                        Logger.getLogger(inventario.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                    JOptionPane.showMessageDialog(null, "Dato " + cont + "ingresado correctamente");
+                    cont++;
+                    Forma57 yy = new Forma57();
+                    yy.setVisible(true);
+                    // miCrud.Insertar_registro(nombre, cantidad, marca, modelo, otra_procedecia, descripcion, total_monetario, valor_unitario, 9);
+                    // miCrud.Insertar_registro("cable",5,"utp","x","compra","sin_imagen",500,500, 7);
+                    //guardar serie
+                    // guardar el producto en el registro
+                } catch (SQLException ex) {
+                    Logger.getLogger(inventario.class.getName()).log(Level.SEVERE, null, ex);
+                }/*}
+                else if (cont>cantidad){
+                    JOptionPane.showMessageDialog(null, "Ha terminado de ingresar los valores");
+                    Forma57 yy = new Forma57();
+                    yy.setVisible(true);
+                    cont=1;
+                }*/
+                // }
 
                 System.out.println("nombre" + nombre);
-                System.out.println("unidad" + unidad);
                 System.out.println("cantidad " + cantidad);
-                System.out.println("valor unitario " + valor_unitario);
-                System.out.println("descripcion" + descripcion);
-                System.out.println("otra " + otra);
-                System.out.println("compra" + compra);
+                System.out.println("marca" + marca);
+                System.out.println("modelo" + modelo);
                 System.out.println("otra procedencia " + otra_procedecia);
+                System.out.println("descripcion" + descripcion);
+                System.out.println("total" + total_monetario);
+                System.out.println("valor unitario " + valor_unitario);
+
                 //jButton1.setVisible(true);
                 //jButton5.setVisible(true);
-                Forma57 yy = new Forma57();
-                yy.setVisible(true);
             }
         } else if (compra) {
             cantidad = Integer.parseInt(text9);
-            valor_unitario = Integer.parseInt(text10);
+            valor_unitario = total_monetario / cantidad;
             int cont = 1;
-            for (int i = 0; i < cantidad; i++) {
-                cont++;
-                String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
-                try {
-                    //guardar serie
-                    miCrud.Insertar_serie(serie);
-                    
-                    //guardar el producto en registro
-                } catch (SQLException ex) {
-                    Logger.getLogger(inventario.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            /* for (int i = 0; i < cantidad; i++) {
+                cont++;*/
+            String serie = (String) JOptionPane.showInputDialog("Ingrese el número de serie del producto " + cont);
+            try {
+                //guardar serie
+                //enviar compra en procedencia
+                miCrud.Insertar_serie(serie);
+                miCrud.IngresarRegistro(miConexion, nombre, cantidad, marca, modelo, "COMPRA", descripcion, total_monetario, valor_unitario);
+                miCrud.getconexion();
+                JOptionPane.showMessageDialog(null, "Dato " + cont + "ingresado correctamente");
+
+                Forma57 yy = new Forma57();
+                yy.setVisible(true);
+                //guardar el producto en registro
+            } catch (SQLException ex) {
+
+                Logger.getLogger(inventario.class.getName()).log(Level.SEVERE, null, ex);
             }
+            // }
             //insertarmos datos en el registro
             System.out.println("nombre" + nombre);
-            System.out.println("unidad" + unidad);
+            //System.out.println("unidad" + unidad);
             System.out.println("cantidad " + cantidad);
             System.out.println("valor unitario " + valor_unitario);
             System.out.println("descripcion" + descripcion);
@@ -600,11 +635,8 @@ public class inventario extends javax.swing.JFrame {
             System.out.println("otra procedencia " + otra_procedecia);
             //jButton1.setVisible(true);
             //jButton5.setVisible(true);
-            Forma57 yy = new Forma57();
-            yy.setVisible(true);
 
         }
-
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -652,8 +684,8 @@ public class inventario extends javax.swing.JFrame {
     private void jTextField13KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-             marca = jTextField10.getText();
-             jTextField12.setText("");
+            marca = jTextField10.getText();
+            jTextField12.setText("");
             jTextField12.requestFocus();
         }
     }//GEN-LAST:event_jTextField13KeyPressed

@@ -1,0 +1,50 @@
+
+ 
+ Delete from serie where id=25;
+ Select*from registro;
+ insert into serie(no_serie) values('29a');
+ select*from serie;
+ SELECT MAX(id) FROM serie; 
+ DELIMITER //
+ DROP TRIGGER IF EXISTS GuardarRegistro //
+ CREATE TRIGGER GuardarRegistro
+ after INSERT ON serie
+ FOR EACH ROW BEGIN
+ declare SERIE int default 0;
+ declare dispositivoV varchar(45);
+ declare cantidadV int;
+ declare marcaV varchar(45);
+ declare modeloV varchar(45);
+ declare procedenciaV varchar(45);
+ declare descripcionV varchar(255);
+ declare total_monetario float;
+ declare precio_unitario float;
+ 
+ SELECT MAX(id) INTO SERIE FROM serie; 
+ set SERIE=SERIE+1;
+ INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,descripcion,total_monetario,precio_unitario,serie_id) 
+ VALUES(dispositivoV, cantidadV ,marcaV ,modeloV,procedenciaV, descripcionV , total_monetarioV ,precio_unitarioV ,SERIE);
+ end;//
+ DELIMITER ;
+             
+             
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarRegistro //
+CREATE PROCEDURE InsertarRegistro(
+dispositivoV varchar(45),
+cantidadV int,
+marcaV varchar(45),
+modeloV varchar(45),
+procedenciaV varchar(45),
+descripcionV varchar(255),
+total_monetarioV float,
+precio_unitarioV float
+)
+BEGIN
+ declare SERIE int default 0;
+ SELECT MAX(id) INTO SERIE FROM serie; 
+ INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,descripcion,total_monetario,precio_unitario,serie_id) 
+ VALUES(dispositivoV, cantidadV ,marcaV ,modeloV,procedenciaV, descripcionV , total_monetarioV ,precio_unitarioV ,SERIE);
+ END;//
+delimiter ;
+call conexion.InsertarRegistro('cable', 5 , 'utp', 'x', 'compra', 'sin_imagen', 500.00, 500.00);
