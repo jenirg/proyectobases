@@ -41,15 +41,12 @@ public class PanelMail extends javax.swing.JFrame {
         numero = (int)(Math.random()*99);
         numero2 = (int)(Math.random()*100);
         multiplicacion = numero* numero2;
-      //  +txtasunto.getText()
-        c.setContrasenia("n46282747");
-        c.setUsuarioCorreo("jeniferrabanales99@gmail.com");
-       c.setAsunto("SU CÓDIGO DE VERIFICACIÓN");
-       c.setMensaje("SU CÓDIGO ES:"+" "+multiplicacion+" "+txtmensaje.getText());
-       c.setDestino(txtdestino.getText().trim());
-     //  c.setNombreArchivo("xx.jpg");
-      //c.setRutaArcivo("D://Mis Documentos//Documentos//GItHub//proyectobases/xx.jpg");
-       Controlador co = new Controlador();
+        c.setContrasenia("conejofeliz");
+        c.setUsuarioCorreo("proyectobasesja@gmail.com");
+        c.setAsunto("SU CÓDIGO DE VERIFICACIÓN");
+        c.setMensaje("SU CÓDIGO ES:"+" "+multiplicacion);
+        c.setDestino(txtdestino.getText().trim());
+        Controlador co = new Controlador();
        if(co.enviarCorreo(c)){
            JOptionPane.showMessageDialog(null, "CORREO ENVIADO");
        }else{
@@ -69,11 +66,7 @@ public class PanelMail extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         txtdestino = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtmensaje = new javax.swing.JTextArea();
-        txtasunto = new javax.swing.JTextField();
         btnEnviar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -87,14 +80,7 @@ public class PanelMail extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Enviar a:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Asunto :");
-
         txtdestino.setText("ejemplo@gmail.com");
-
-        txtmensaje.setColumns(20);
-        txtmensaje.setRows(5);
-        jScrollPane1.setViewportView(txtmensaje);
 
         btnEnviar.setBackground(new java.awt.Color(153, 0, 0));
         btnEnviar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -133,22 +119,16 @@ public class PanelMail extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEnviar)
                     .addComponent(btnEnviar1)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
+                            .addComponent(jLabel1)
                             .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtasunto)
-                                .addComponent(txtdestino, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)))
+                            .addComponent(txtdestino, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtcodigo, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnEnviar)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtcodigo, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
@@ -158,23 +138,17 @@ public class PanelMail extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtdestino, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtasunto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(btnEnviar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(26, 26, 26)
                 .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addComponent(btnEnviar1)
-                .addGap(47, 47, 47))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -206,6 +180,8 @@ public class PanelMail extends javax.swing.JFrame {
 
     private void btnEnviar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar1ActionPerformed
         // TODO add your handling code here:
+        codigo = Integer.parseInt(txtcodigo.getText());
+        System.out.println(codigo);
         if(codigo == multiplicacion){
          recuperarcontrasenia yy = new recuperarcontrasenia();
          yy.setVisible(true);
@@ -232,8 +208,8 @@ public class PanelMail extends javax.swing.JFrame {
 
         Session inicio = Session.getDefaultInstance(conectar);
 
-        String CorreoLocal = "jeniferrabanales99@gmail.com";
-        String Contra ="n46282747";
+        String CorreoLocal = "";
+        String Contra ="";
         String Destinario = txtDestino.getText();
         String Asunto = txtAsunto.getText();
         String Mensaje = txtTexto.getText();
@@ -297,14 +273,10 @@ public class PanelMail extends javax.swing.JFrame {
     private javax.swing.JButton btnEnviar1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtasunto;
     private javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtdestino;
-    private javax.swing.JTextArea txtmensaje;
     // End of variables declaration//GEN-END:variables
 }
