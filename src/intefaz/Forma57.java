@@ -7,8 +7,11 @@ package intefaz;
 
 import Clases.CRUD;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,8 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class Forma57 extends javax.swing.JFrame {
 
-    String Mes = "", solicitado = "", autorizado = "", entregado = "", recibido = "", referencia="";
-   String newsolicitado="", newautorizado = "", newentregado ="", newrecibido="";
+    String Mes = "", solicitado = "", autorizado = "", entregado = "", recibido = "", referencia = "";
+    String newsolicitado = "", newautorizado = "", newentregado = "", newrecibido = "";
     int Dia = 0, Año = 0;
     CRUD miCrud = new CRUD();
 
@@ -321,18 +324,25 @@ public class Forma57 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        solicitado = (String) jComboBox1.getSelectedItem();
-        autorizado = (String) jComboBox2.getSelectedItem();
-        entregado = (String) jComboBox3.getSelectedItem();
-        recibido = (String) jComboBox4.getSelectedItem();
-        ////   Runtime.getRuntime().exec("rund1132 url.dll, FileProtocolHandler"+"C:\Users\jenirg\Desktop\");
-
-        System.out.println("Solicitado " + solicitado);
-        System.out.println("Autorizado" + autorizado);
-        System.out.println("Entregado " + entregado);
-        System.out.println("Entregado " + entregado);
-        System.out.println("Recibido " + recibido);
+        try {
+            // TODO add your handling code here:
+            solicitado = (String) jComboBox1.getSelectedItem();
+            autorizado = (String) jComboBox2.getSelectedItem();
+            entregado = (String) jComboBox3.getSelectedItem();
+            recibido = (String) jComboBox4.getSelectedItem();
+            referencia = jTextField1.getText();
+            
+            ////   Runtime.getRuntime().exec("rund1132 url.dll, FileProtocolHandler"+"C:\Users\jenirg\Desktop\");
+            System.out.println("Solicitado " + solicitado);
+            System.out.println("Autorizado" + autorizado);
+            
+            System.out.println("Entregado " + entregado);
+            System.out.println("Entregado " + entregado);
+            System.out.println("Recibido " + recibido);
+            miCrud.Insertar_Forma57(referencia,solicitado , autorizado, entregado, recibido);
+        } catch (SQLException ex) {
+            Logger.getLogger(Forma57.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -340,7 +350,7 @@ public class Forma57 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
     public void insertarcombo1() {
         // extraer datos de la tabla colaborador
-        String nombre="Juan Lucas Gomez Morales";
+        String nombre = "Juan Lucas Gomez Morales";
         jComboBox1.addItem(nombre);
         jComboBox2.addItem(nombre);
         jComboBox3.addItem(nombre);
@@ -348,10 +358,10 @@ public class Forma57 extends javax.swing.JFrame {
     }
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code he
-       
+
         String Solicitado = (String) jComboBox1.getSelectedItem();
         solicitado = Solicitado;
-        
+
 
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -381,31 +391,31 @@ public class Forma57 extends javax.swing.JFrame {
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            referencia= jTextField1.getText();
+            referencia = jTextField1.getText();
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        newsolicitado= JOptionPane.showInputDialog("Ingrese el nombre:");
+        newsolicitado = JOptionPane.showInputDialog("Ingrese el nombre:");
         jComboBox1.addItem(newsolicitado);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-           newautorizado= JOptionPane.showInputDialog("Ingrese el nombre:");
+        newautorizado = JOptionPane.showInputDialog("Ingrese el nombre:");
         jComboBox1.addItem(newautorizado);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-           newentregado= JOptionPane.showInputDialog("Ingrese el nombre:");
+        newentregado = JOptionPane.showInputDialog("Ingrese el nombre:");
         jComboBox1.addItem(newentregado);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-          newrecibido= JOptionPane.showInputDialog("Ingrese el nombre:");
+        newrecibido = JOptionPane.showInputDialog("Ingrese el nombre:");
         jComboBox1.addItem(newrecibido);
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -434,6 +444,8 @@ public class Forma57 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Forma57.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

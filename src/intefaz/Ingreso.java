@@ -287,7 +287,7 @@ public class Ingreso extends javax.swing.JFrame {
             inventario.setVisible(true);
             dispose();
         } else if (boton_numero == 2) {
-            notaderesponsabilidad entrega = new notaderesponsabilidad();
+            entrega entrega = new entrega();
             entrega.setVisible(true);
             dispose();
         } else if (boton_numero == 3) {

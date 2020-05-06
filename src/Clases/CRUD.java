@@ -12,7 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -35,26 +38,13 @@ public class CRUD {
         }      // TODO 
 
     }
-    public void Insertar_nota_responsabilidad(String numero, String per_instala, String per_recibe, String ubica) throws SQLException{
-        try{
-            try(Statement statement = (Statement) miConexion.createStatement()) {
-                statement.execute("INSERT INTO nota_responsabilidad(no,persona_instala, persona_recibe, ubicacion)  VALUES('" +  numero+ "'," + per_instala+ "','" + per_recibe +"','" + ubica+ "')");
-
-                JOptionPane.showMessageDialog(null, "ENTREGA INGRESADA CON ÉXITO");
-            }
-        }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
-        }      // TODO 
-    }
-    
-    
 
     public void Insertar_registro(String dispositivo, int cantidad, String marca, String modelo, String procedencia, String descripcion, float total_monetario, float precio_unitario, int serie_id) throws SQLException {
         //No se esta incluyendo la imagen
         try {
             try (Statement statement = (Statement) miConexion.createStatement()) {
                 statement.execute("INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,descripcion,total_monetario,precio_unitario,serie_id)  VALUES('"
-                + dispositivo + "'," + cantidad + ",'" + marca + "','" + modelo + "','" + procedencia + "','" + descripcion + "'," + total_monetario + "," + precio_unitario + "," + serie_id + ")");
+                        + dispositivo + "'," + cantidad + ",'" + marca + "','" + modelo + "','" + procedencia + "','" + descripcion + "'," + total_monetario + "," + precio_unitario + "," + serie_id + ")");
                 JOptionPane.showMessageDialog(null, "REGISTRO INGRESADO CON ÉXITO");
             }
             //miConexion.close();
@@ -75,8 +65,9 @@ public class CRUD {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO LA SERIE");
             System.out.println(e);
-        }      
+        }
     }
+
     public void Insertar_puesto(String el_puesto) throws SQLException {
 
         try {
@@ -88,8 +79,9 @@ public class CRUD {
             miConexion.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO LA PUESTO");
-        }      
+        }
     }
+
     public void Insertar_dependencia(String la_dependencia) throws SQLException {
 
         try {
@@ -101,21 +93,29 @@ public class CRUD {
             miConexion.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "NO GUARDO LA DEPENDENCIA");
-        }      
+        }
     }
-     public void Insertar_pregunta_seguridad(String pregunta,String respuesta) throws SQLException {
+
+    public void Insertar_Forma57(String ref_f57, String persona_solicita, String persona_autoriza, String persona_entrega, String persona_recibe) throws SQLException {
 
         try {
             try (Statement statement = (Statement) miConexion.createStatement()) {
-                statement.execute("INSERT INTO pregunta_seguridad(pregunta,respuesta)  VALUES('" + pregunta +"','"+respuesta+ "')");
+                statement.execute("INSERT INTO forma57 ( ref_f57,persona_solicita,persona_autoriza,persona_entrega,persona_recibe)  VALUES('"
+                        + ref_f57 + "','" + persona_solicita + "','" + persona_autoriza + "','" + persona_entrega + "','" + persona_recibe + "')");
 
-                JOptionPane.showMessageDialog(null, "DEPENDENCIA INGRESADA CON ÉXITO");
+                JOptionPane.showMessageDialog(null, "FORMA57 INGRESADA CON ÉXITO");
             }
             miConexion.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "NO GUARDO LA DEPENDENCIA");
-        }      
+            JOptionPane.showMessageDialog(null, "NO GUARDO LA FORMA57");
+        }
     }
+
+
+
+
+  
+   
      public void Insertar_nombre_apellido(String primer_nombre,String segundo_nombre,String primer_apellido,String segundo_apellido,int usuario_id) throws SQLException {
 
         try {
@@ -160,5 +160,51 @@ public class CRUD {
         cstmt.execute();  
         System.out.println("Ingreso correcto");  
     }  
+    }
+  public static void IngresarEntrega(Connection con, String dispositivo, int cantidad, String persona, String serie) throws SQLException {
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarRegistro(?, ?, ? ,? )}");) {
+            cstmt.setString(1, dispositivo);
+            cstmt.setInt(2, cantidad);
+            cstmt.setString(3, persona);
+            cstmt.setString(4, serie);
+            cstmt.execute();
+            System.out.println("Ingreso correcto");
+        }
+    }
+
+    public void ConsultaPorNoSerie(int serie, JTextField dispositivo, JTextField modelo, JTextField marca) {
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select * from registro where serie_id=" + serie );
+            while (clr.next())
+            {
+            dispositivo.setText((clr.getString("dispositivo")));
+            modelo.setText((clr.getString("modelo")));
+            marca.setText((clr.getString("marca")));
+            }         // return cte;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int BuscarElIDSerie(String serie) {
+        int IDSerie = 0;
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select id from serie where no_serie='" + serie + "'");
+            while (clr.next()) {
+                IDSerie=clr.getInt("id");
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+        return IDSerie;
     }
 }
