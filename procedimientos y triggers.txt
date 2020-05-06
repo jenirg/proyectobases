@@ -27,7 +27,7 @@
  end;//
  DELIMITER ;
              
-             
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR REGISTRO----------------------------------------//             
 delimiter //
 DROP PROCEDURE IF EXISTS InsertarRegistro //
 CREATE PROCEDURE InsertarRegistro(
@@ -48,3 +48,74 @@ BEGIN
  END;//
 delimiter ;
 call conexion.InsertarRegistro('cable', 5 , 'utp', 'x', 'compra', 'sin_imagen', 500.00, 500.00);
+
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR ENTREGA-----------------------------------------//  
+
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarEntrega //
+CREATE PROCEDURE InsertarEntrega(
+dispositivoV varchar(45),
+cantidadV int,
+serieV varchar(45),
+persona_entregaV varchar(45),
+NoS varchar(45),
+persona_recibeV varchar(45),
+persona_instalaV varchar(45),
+dependenciaV varchar(100),
+ubicacionV varchar(45)
+)
+BEGIN
+declare IDSERIEE int default 0;
+declare IDDEPENDENCIA int default 0;
+declare CANTIDADE varchar(45); 
+SELECT 
+    s.id, r.cantidad
+INTO IDSERIEE , CANTIDADE FROM
+    registro r
+        INNER JOIN
+    serie s ON r.serie_id = s.id
+WHERE
+    s.no_serie = serieV;
+
+select id into IDDEPENDENCIA from dependencia where la_dependencia=dependenciaV;
+
+IF CANTIDADE>cantidadV THEN
+ INSERT INTO entrega(dispositivo,cantidad,persona_entrega,serie_id) 
+ VALUES(dispositivoV, cantidadV ,persona_entregaV,IDSERIEE);
+ INSERT INTO nota_responsabilidad(no,persona_instala,persona_recibe, ubicacion,dependencia_id) 
+ VALUES(NoS,persona_instalaV,persona_recibeV,ubicacionV,IDDEPENDENCIA);
+ SET CANTIDADE=0;
+END IF;
+END;//
+delimiter ; 
+call conexion.InsertarEntrega ('Mouse',1,'456bef','FULANITO 5','789ywz','FULANITO 6', ' FULANITO 7', 'Unidad Regional de Informatica y Telecomunicaciones','Quetzaltenango');
+
+//-----------------------------------------TRIGGER PARA ACTUALIZAR CANTIDAD DE REGISTRO-----------------------------------------//  
+
+ DELIMITER //
+ DROP TRIGGER IF EXISTS DisminuirExistencias//
+ CREATE TRIGGER DisminuirExistencias
+ after INSERT ON entrega
+ FOR EACH ROW BEGIN
+ declare CANTIDADE int default 0;
+ declare CANTIDADR int default 0;
+ declare TOTAL int default 0;
+ declare IDREGISTRO int default 0;
+ declare IDSERIE int default 0;
+ 
+ select cantidad, serie_id into CANTIDADE, IDSERIE from  entrega where id=New.id;
+ SELECT 
+     r.cantidad, r.id
+INTO  CANTIDADR, IDREGISTRO FROM
+    registro r
+        INNER JOIN
+    serie s ON r.serie_id = s.id
+WHERE
+    s.id = IDSERIE;
+
+ set TOTAL=CANTIDADR-CANTIDADE;
+
+UPDATE registro SET cantidad=TOTAL WHERE id=IDREGISTRO;
+end;//
+ DELIMITER ;
