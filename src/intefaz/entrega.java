@@ -6,7 +6,12 @@
 package intefaz;
 
 import Clases.CRUD;
+import conexion.ConexionBD;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,12 +20,13 @@ import javax.swing.JOptionPane;
  */
 public class entrega extends javax.swing.JFrame {
 
-    String letra, dispositivo = "", marca = "", modelo = "", serie = "", persona_instaladora = "", persona_entrega = "", Mes = "", dependencia = "", persona_recibe = "";
-    int Dia = 0, Año = 0, cant=0;
+   
+    String letra, dispositivo = "", NoS = "", ubicacion = "", marca = "", modelo = "", serie = "", instala = "", persona_entrega = "", Mes = "", dependencia = "", persona_recibe = "";
+    int Dia = 0, Año = 0, cant = 0;
     String solicitado = "", autorizado = "", entregado = "", recibido = "", referencia = "";
     int nopregunta = 0;
-    CRUD micrud=new CRUD();
-
+    CRUD micrud = new CRUD();
+    Connection miConexion = (Connection) ConexionBD.GetConnection();
     /**
      * Creates new form notaderesponsabilidad
      */
@@ -588,24 +594,22 @@ public class entrega extends javax.swing.JFrame {
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         // TODO add your handling code here:
-        boolean accion=false;
+        boolean accion = false;
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             serie = jTextField5.getText();
 
-            if (serie.isEmpty()){
+            if (serie.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "NO A INGRESADO UNA SERIE A BUSCAR");
-            }
-            else if(cant==0){
+            } else if (cant == 0) {
                 JOptionPane.showMessageDialog(null, "NO A INGRESADO LA CANTIDAD");
-            }
-            else if (serie.length()>0){
-                System.out.println("serie"+ serie);
-                int the_serie= micrud.BuscarElIDSerie(serie);
-                if (the_serie>0){
-                    System.out.println("el ID de la serie"+ the_serie);
+            } else if (serie.length() > 0) {
+                System.out.println("serie" + serie);
+                int the_serie = micrud.BuscarElIDSerie(serie);
+                if (the_serie > 0) {
+                    System.out.println("el ID de la serie" + the_serie);
                     micrud.ConsultaPorNoSerie(the_serie, jTextField2, jTextField4, jTextField3);
-                    accion=true;}
-                else{
+                    accion = true;
+                } else {
                     JOptionPane.showMessageDialog(null, "NO EXISTE LA SERIE QUE BUSCA");
 
                 }
@@ -649,15 +653,21 @@ public class entrega extends javax.swing.JFrame {
         Mes = (String) jComboBox3.getSelectedItem();
         String dia = (String) jComboBox1.getSelectedItem();
         String año = (String) jComboBox2.getSelectedItem();
-        cant = Integer.parseInt(jTextField1.getText());
+        if (jTextField1.getText().isEmpty() || jTextField1.getText().equals('0')) {
+            JOptionPane.showMessageDialog(null, "NO A INGRESADO LA CANTIDAD");
+        } else {
+            cant = Integer.parseInt(jTextField1.getText());
+        }
         dispositivo = jTextField2.getText();
         marca = jTextField3.getText();
         modelo = jTextField4.getText();
         serie = jTextField5.getText();
-        solicitado = (String) jComboBox1.getSelectedItem();
-        autorizado = (String) jComboBox2.getSelectedItem();
-        entregado = (String) jComboBox3.getSelectedItem();
-        recibido = (String) jComboBox4.getSelectedItem();
+        ubicacion = jTextField7.getText();
+        NoS = jTextField6.getText();
+        dependencia = (String) jComboBox8.getSelectedItem();
+        recibido = (String) jComboBox7.getSelectedItem();
+        entregado = (String) jComboBox6.getSelectedItem();
+        instala = (String) jComboBox4.getSelectedItem();
         System.out.println("1 cantidad  " + cant);
         System.out.println("2 dispositivo  " + dispositivo);
         System.out.println("1 marca  " + marca);
@@ -666,6 +676,24 @@ public class entrega extends javax.swing.JFrame {
         System.out.println("Mes:" + Mes);
         System.out.println("Dia:" + dia);
         System.out.println("Año:" + año);
+        if (jTextField5.getText() == "" || jTextField5.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO A INGRESADO EL PRODUCTO QUE DESEA BUSCAR");
+        } else if (jTextField6.getText() == "" || jTextField6.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO A INGRESADO LA SERIE");
+        } else if (jTextField7.getText() == "" || jTextField7.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO A INGRESADO LA UBICACIÓN");
+        } else {
+            int id = micrud.BuscarElIDSerie(serie);
+            boolean x = micrud.ConsultaDeExistencias(id, cant);
+            if (x == true) {
+                try {
+                    micrud.IngresarEntrega(miConexion, dispositivo, cant, serie, entregado, NoS, recibido, instala, dependencia, ubicacion);
+                } catch (SQLException ex) {
+                    Logger.getLogger(entrega.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged

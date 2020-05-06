@@ -161,15 +161,21 @@ public class CRUD {
         System.out.println("Ingreso correcto");  
     }  
     }
-  public static void IngresarEntrega(Connection con, String dispositivo, int cantidad, String persona, String serie) throws SQLException {
-        try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarRegistro(?, ?, ? ,? )}");) {
+  public static void IngresarEntrega(Connection con, String dispositivo, int cantidad, String serie, String persona_entrega, String NoS,String persona_recibe,String persona_instala,String dependencia,String ubicacion) throws SQLException {
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarEntrega(?, ?, ? ,? ,? ,?, ?, ?, ? )}");) {
             cstmt.setString(1, dispositivo);
             cstmt.setInt(2, cantidad);
-            cstmt.setString(3, persona);
-            cstmt.setString(4, serie);
+            cstmt.setString(3, serie);
+            cstmt.setString(4, persona_entrega);
+            cstmt.setString(5, NoS);
+            cstmt.setString(6, persona_recibe);
+            cstmt.setString(7, persona_instala);
+            cstmt.setString(8, dependencia);
+            cstmt.setString(9, ubicacion);
             cstmt.execute();
-            System.out.println("Ingreso correcto");
+            JOptionPane.showMessageDialog(null, "ENTREGA CORRECTA");
         }
+        
     }
 
     public void ConsultaPorNoSerie(int serie, JTextField dispositivo, JTextField modelo, JTextField marca) {
@@ -206,6 +212,31 @@ public class CRUD {
             System.out.println(ex);
         }
         return IDSerie;
+    }
+    
+        public boolean ConsultaDeExistencias(int serie, int cantidad) {
+        int CANTIDAD = 0;
+        boolean x=true;
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select cantidad from registro where serie_id=" + serie);
+            while (clr.next()) {
+                CANTIDAD=clr.getInt("cantidad");
+                if (CANTIDAD<cantidad){
+                    JOptionPane.showMessageDialog(null, "NO SE PUEDE REALIZAR LA ENTREGA, NO HAY SUFICIENTES EXISTENCIAS");
+                    x=false;
+                }
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+        return x;
     }
      public static void InsertarUsuario(Connection con,String correosp,String contraseniasp,String correo,String contraseña, boolean super_usuario, String dependencia_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido ) throws SQLException { 
                     
