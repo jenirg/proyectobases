@@ -207,4 +207,37 @@ public class CRUD {
         }
         return IDSerie;
     }
+     public static void InsertarUsuario(Connection con,String correosp,String contraseniasp,String correo,String contraseña, boolean super_usuario, String dependencia_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido ) throws SQLException { 
+                    
+                    try(CallableStatement cstmt = con.prepareCall("{call conexion.InsertarUsuario(?, ?, ? ,?,?,?,?,?,?,?)}"); ) {  
+                     cstmt.setString(1,correosp);
+                    cstmt.setString(2,contraseniasp);
+                    cstmt.setString(3,correo);
+                    cstmt.setString(4,contraseña);
+                    cstmt.setBoolean(5, super_usuario);
+                    cstmt.setString(6,dependencia_id);
+                    cstmt.setString(7,primer_nombre);
+                    cstmt.setString(8,segundo_nombre);
+                    cstmt.setString(9,primer_apellido);
+                    cstmt.setString(10,segundo_apellido);
+                    cstmt.execute();  
+                     System.out.println("Ingreso correcto");  
+    
+                     }  
+                }
+     
+      public static void InsertarColaborador(Connection con,String primernom, String segundonom,String primerape, String segundoape, String dependenciaid,String puestoid ) throws SQLException { 
+                    
+          try(CallableStatement cstmt = con.prepareCall("{call conexion.InsertarColaborador(?, ?, ? ,?,?,?)}"); ) {  
+                     cstmt.setString(1,primernom);
+                    cstmt.setString(2,segundonom);
+                    cstmt.setString(3,primerape);
+                    cstmt.setString(4,segundoape);
+                    cstmt.setString(5,dependenciaid);
+                    cstmt.setString(6,puestoid);
+                    cstmt.execute();  
+                     System.out.println("Ingreso correcto");  
+    
+                     }  
+     }
 }

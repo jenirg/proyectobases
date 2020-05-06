@@ -5,19 +5,46 @@
  */
 package intefaz;
 
+import Clases.CRUD;
+import Usuario.Compresor;
+import conexion.ConexionBD;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author dell
  */
 public class ingresodecontrasena extends javax.swing.JFrame {
-String contrasenia="";
+String contrasenia="", usuario = "";
+String correoE,contraseñaE;
+boolean super_usuarioE;
+String dependencia_idE,  primer_nombreE, segundo_nombreE,  primer_apellidoE, segundo_apellidoE;
+String pass_concatenada2 = "";
+ CRUD miCrud = new CRUD();
+    Connection con = (Connection) ConexionBD.GetConnection();
+    
     /**
      * Creates new form ingresodecontrasena
      */
     public ingresodecontrasena() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+       public ingresodecontrasena(String correo,String contraseña, boolean super_usuario, String dependencia_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido) {
+        initComponents();
+        correoE = correo;
+        contraseñaE =contraseña;
+        super_usuarioE=super_usuario;
+        dependencia_idE=dependencia_id;
+        primer_nombreE=primer_nombre;
+        segundo_nombreE=segundo_nombre;
+        primer_apellidoE=primer_apellido;
+        segundo_apellidoE=segundo_apellido;
         this.setLocationRelativeTo(null);
     }
 
@@ -35,6 +62,8 @@ String contrasenia="";
         jLabel1 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -65,32 +94,52 @@ String contrasenia="";
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("INGRESE EL USUARIO:");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(49, 49, 49))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(jLabel1))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(62, 62, 62)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGap(65, 65, 65)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(52, 52, 52)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -126,6 +175,7 @@ String contrasenia="";
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         // TODO add your handling code here:
+       
         String pass_concatenada2="";
          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             char[] contraseña = jPasswordField1.getPassword();
@@ -134,21 +184,54 @@ String contrasenia="";
                 System.out.println(contraseña[i]);
             }
             contrasenia=pass_concatenada2;
-            System.out.println(pass_concatenada2);
+             System.out.println(pass_concatenada2);
             //jButton3.requestFocus();
+             System.out.println(comprimir(pass_concatenada2));
              jPasswordField1.requestFocus();
         }
     }//GEN-LAST:event_jPasswordField1KeyPressed
     public String getContraseña(){
     return contrasenia;
     }
+      private String comprimir(String frase) {
+        Compresor compresor = new Compresor();
+        String Cadena_en_binario = compresor.CodigoAscii_a_binario(frase);
+        String cadena_simple = compresor.cadena_RLE(Cadena_en_binario);
+        String ultima_cadena = compresor.rle_a_Ascii(cadena_simple);
+        return ultima_cadena;
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    try {
         // TODO add your handling code here:
-         Menu2 menul = new Menu2();
+        usuario = jTextField1.getText();
+        String pass= (comprimir(pass_concatenada2));
+        System.out.println(usuario);
+        System.out.println(pass_concatenada2);
+        miCrud.InsertarUsuario(con, usuario, pass,correoE,contraseñaE,super_usuarioE,dependencia_idE,primer_nombreE, segundo_nombreE, primer_apellidoE, segundo_apellidoE);
         
-         ingresodecontrasena yy = new ingresodecontrasena();
-         yy.setVisible(true);
+        
+        
+        Menu2 menul = new Menu2();
+        setVisible(false);
+        // ingresodecontrasena yy = new ingresodecontrasena();
+        // yy.setVisible(true);
+    } catch (SQLException ex) {
+        Logger.getLogger(ingresodecontrasena.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            usuario = jTextField1.getText();
+            jPasswordField1.setText("");
+            jPasswordField1.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -189,7 +272,9 @@ String contrasenia="";
     private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

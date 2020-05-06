@@ -5,7 +5,10 @@ import Clases.CRUD;
 import Usuario.Almacen_Pass;
 import Usuario.Compresor;
 import Usuario.Pregunta;
+import conexion.ConexionBD;
 import java.awt.event.KeyEvent;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +25,11 @@ public class crearcuenta extends javax.swing.JFrame {
     String letra, dpi = "", pregunta = "", primernombre = "", segundonombre = "", primerapellido = "", segundoapellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "", otradependencia = "";
     int Dia = 0, Año = 0;
     int nopregunta = 0;
+    Boolean sp;
     String pass_concatenada1 = "", pass_concatenada2 = "";
-    CRUD miCrud=new CRUD();
+    CRUD miCrud = new CRUD();
+    Connection con = (Connection) ConexionBD.GetConnection();
+
     /**
      * Creates new form crearcuenta
      */
@@ -315,6 +321,11 @@ public class crearcuenta extends javax.swing.JFrame {
         });
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidad Regional Administrativa" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setText("AGREGAR");
@@ -494,35 +505,36 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
-        
+
 
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-           otradependencia = jTextField6.getText();
+            otradependencia = jTextField6.getText();
             //  jTextField7.setText("");
             //jTextField7.requestFocus();
         }
-        
+
     }//GEN-LAST:event_jTextField6KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         Mes = (String) jComboBox1.getSelectedItem();
-        String dia= (String) jComboBox2.getSelectedItem();
-        String año=(String) jComboBox3.getSelectedItem();
+        String dia = (String) jComboBox2.getSelectedItem();
+        String año = (String) jComboBox3.getSelectedItem();
         pass_concatenada1 = "";
         pass_concatenada2 = "";
         primernombre = jTextField2.getText();
         segundonombre = jTextField7.getText();
         primerapellido = jTextField5.getText();
         segundoapellido = jTextField1.getText();
-      //  dpi = jTextField3.getText();
-         otradependencia = jTextField6.getText();
+        //  dpi = jTextField3.getText();
+        otradependencia = jTextField6.getText();
         correo = jTextField4.getText();
         la_dependencia = (String) jComboBox4.getSelectedItem();
+        sp = jRadioButton1.isSelected();
         char[] contraseña1 = jPassword.getPassword();
         for (int i = 0; i < contraseña1.length; i++) {
             pass_concatenada1 = pass_concatenada1 + contraseña1[i];
@@ -541,20 +553,21 @@ public class crearcuenta extends javax.swing.JFrame {
         System.out.println("2 nombre  " + segundonombre);
         System.out.println("1 apellido  " + primerapellido);
         System.out.println("2 apelldio  " + segundoapellido);
-        System.out.println("No DPI " + dpi);
+        //  System.out.println("No DPI " + dpi);
         System.out.println("correo " + correo);
-        System.out.println("depedencia " + la_dependencia);
+        // System.out.println("depedencia " + la_dependencia);
         System.out.println("pass1 " + pass_concatenada1);
         System.out.println("pass2 " + pass_concatenada2);
-        System.out.println("OTRA DEPENDENCIA:"+ otradependencia);
-        System.out.println("Mes:"+Mes);
-        System.out.println("Dia:"+dia);
-        System.out.println("Año:"+año);
+        // System.out.println("OTRA DEPENDENCIA:"+ otradependencia);
+        System.out.println("Mes:" + Mes);
+        System.out.println("Dia:" + dia);
+        System.out.println("Año:" + año);
+        System.out.println("SUPER USUARIO:" + sp);
         int compatible = pass_concatenada1.compareTo(pass_concatenada2);
         System.out.println("compatible  " + compatible);
-        if (primernombre.equals("") || dpi.equals("") || segundonombre.equals("") || primerapellido.equals("") || segundoapellido.equals("") || correo.equals("") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/ || pass_concatenada2.equals("") || pass_concatenada1.equals("") || la_dependencia.equals("")) {
+        if (primernombre.equals("") || segundonombre.equals("") || primerapellido.equals("") || segundoapellido.equals("") || correo.equals("") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/ || pass_concatenada2.equals("") || pass_concatenada1.equals("")) {
             JOptionPane.showMessageDialog(null, "Ha dejado algun campo vacio, el proceso no puede continuar, verifique los datos");
-        } else if (dpi.equals("No de DPI") || primernombre.equals("Primer Nombre") || segundonombre.equals("Segundo Nombre") || primerapellido.equals("Primer Apellido") || segundoapellido.equals("Segundo Apellido") || correo.equals("alguien@gmail.com") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/) {
+        } else if (primernombre.equals("Primer Nombre") || segundonombre.equals("Segundo Nombre") || primerapellido.equals("Primer Apellido") || segundoapellido.equals("Segundo Apellido") || correo.equals("alguien@gmail.com") /*|| Dia == 0 || Año == 0 || Mes.equals("")*/) {
             JOptionPane.showMessageDialog(null, "No ha llenado los datos de forma correcta, no se puede continuar con el proceso, verifique los datos");
         } else if (compatible < 0 || compatible > 0) {
             JOptionPane.showMessageDialog(null, "La confirmación de contraseña no es la misma , verifique");
@@ -591,44 +604,11 @@ public class crearcuenta extends javax.swing.JFrame {
                         if (seleccion1 != -1) {
                             if (seleccion1 == 0) {
                                 //ir a el area de aprobación por el super usuario
-                                String dpi = (String) JOptionPane.showInputDialog("Ingrese su número de dpi");
-                                String correo = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
-                                //String contraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña 
-                                ingresodecontrasena yy = new ingresodecontrasena();
-                                yy.setVisible(true);
-                                //buscar al super usuario, extraer datos y comparar
-                                if (dpi.equals("123456789") && correo.equals("prueba@gmail.com") && contraseña.equals("1234abcd")) {
-                                    String pregunta_extraida = "1", respuesta_extraida = "hola", respuesta = "";
-                                    String p1 = "1";//=comprimir("¿Nombre de su primera mascota?");
-                                    String p2 = comprimir("¿Nombre de su primmera maestra?");
-                                    String p3 = comprimir("¿Cuál es su comida favorita?");
-                                    String p4 = comprimir("¿Cuál es su pelicula favorita?");
-                                    String p5 = comprimir("¿Cuál es su pasatiempo favorito?");
-                                    // no se trendría que ver la pregunta, hay que descomprimir y mostrar 
-                                    if (pregunta_extraida.equals(p1)) {
-                                        respuesta = (String) JOptionPane.showInputDialog("¿Nombre de su primera mascota?");
-                                        verificacion(respuesta_extraida, respuesta);
-                                    } else if (pregunta_extraida.equals(p2)) {
-                                        respuesta = (String) JOptionPane.showInputDialog("¿Nombre de su primmera maestra?");
-                                        verificacion(respuesta_extraida, respuesta);
+                                String xx;
+                                xx = comprimir(pass_concatenada1);
+                   
+                                // hacer update de super usuario
 
-                                    } else if (pregunta_extraida.equals(p3)) {
-                                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su comida favorita?");
-                                        verificacion(respuesta_extraida, respuesta);
-
-                                    } else if (pregunta_extraida.equals(p4)) {
-                                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su pelicula favorita?");
-                                        verificacion(respuesta_extraida, respuesta);
-
-                                    } else if (pregunta_extraida.equals(p5)) {
-                                        respuesta = (String) JOptionPane.showInputDialog("¿Cuál es su pasatiempo favorito?");
-                                        verificacion(respuesta_extraida, respuesta);
-
-                                    }
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "USTED NO ES EL SUPER USUARIO");
-
-                                }
                             } else {
                                 JOptionPane.showMessageDialog(null, "DESACTIVE EL RADIO BUTTON");
                             }
@@ -652,40 +632,12 @@ public class crearcuenta extends javax.swing.JFrame {
                 if (seleccion3 != -1) {
                     if (seleccion3 == 0) {
                         //buscar al super usuario, extraer datos y comparar
+                        String xx;
+                        xx = comprimir(pass_concatenada1);
+                        ingresodecontrasena yy = new ingresodecontrasena(correo, xx, sp, la_dependencia, primernombre, segundonombre, primerapellido, segundoapellido);
+                        yy.setVisible(true);
+                        
 
-                        String correo1 = (String) JOptionPane.showInputDialog("Ingrese su correo electronico");
-                      //  String lacontraseña = (String) JOptionPane.showInputDialog(null, "Ingrese su contraseña");//hay que corregir este campo, no se debe ver la contraseña
-                      ingresodecontrasena yy = new ingresodecontrasena();
-                                yy.setVisible(true);
-                               String lacontraseña = yy.getContraseña();
-                      if (correo1.equals("prueba@gmail.com") && lacontraseña.equals("1234abcd")) {
-                           /* try {
-                                miCrud.Insertar_dependencia(la_dependencia);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            try {
-                                miCrud.Insertar_puesto("En esta dependencia no importa");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            boolean superu=jRadioButton1.isSelected();
-                            try {
-                                miCrud.Insertar_usuario(dpi,null,correo,contraseña,superu,1,2);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            
-                            try {
-                                miCrud.Insertar_nombre_apellido(primernombre, segundonombre, primerapellido, segundoapellido, 4);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(crearcuenta.class.getName()).log(Level.SEVERE, null, ex);
-                            }*/
-                            JOptionPane.showMessageDialog(null, "LA CUENTA YA FUE CREADA");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "INTENTE DE NUEVO, SUS DATOS NO ESTAN CORRECTOS");
-
-                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "NO OLVIDE QUE EL SUPER USUARIO DEBE ESTAR PRESENTE PARA CUALQUIER CAMBIO");
 
@@ -733,7 +685,7 @@ public class crearcuenta extends javax.swing.JFrame {
         }
     }
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-      // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
@@ -750,8 +702,8 @@ public class crearcuenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             segundoapellido = jTextField1.getText();
-          //  jTextField3.setText("");
-           // jTextField3.requestFocus();
+            jTextField4.setText("");
+            jTextField4.requestFocus();
         }
 
     }//GEN-LAST:event_jTextField1KeyPressed
@@ -802,7 +754,7 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
         // TODO add your handling code here:
         int año = (int) jComboBox3.getSelectedItem();
-         Año = año;
+        Año = año;
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -844,8 +796,8 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jPassword1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassword1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if(pass_concatenada1==pass_concatenada2){
-                 JOptionPane.showMessageDialog(null, "LA CONTRASEÑA NO ES IGUA A LA ANTERIOR");
+            if (pass_concatenada1 == pass_concatenada2) {
+                //   JOptionPane.showMessageDialog(null, "LA CONTRASEÑA NO ES IGUA A LA ANTERIOR");
             }
             /*char[] contraseña = jPassword1.getPassword();
             for (int i = 0; i < contraseña.length; i++) {
@@ -864,10 +816,10 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-         otradependencia = jTextField6.getText();
-         jComboBox4.addItem(otradependencia);
-         jTextField6.setText("");
-         jTextField6.requestFocus();
+        otradependencia = jTextField6.getText();
+        jComboBox4.addItem(otradependencia);
+        jTextField6.setText("");
+        jTextField6.requestFocus();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jPassword1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassword1KeyReleased
@@ -877,6 +829,10 @@ public class crearcuenta extends javax.swing.JFrame {
     private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox4ActionPerformed
 
     /**
      * @param args the command line arguments

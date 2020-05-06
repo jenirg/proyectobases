@@ -1,12 +1,19 @@
 package intefaz;
 
+import Clases.CRUD;
+import conexion.ConexionBD;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Colaborador extends javax.swing.JFrame {
 
     String pnombrecolab = "", snombrecolab = "", papellidocolab = "", sapellidocolab = "", puestocolab = "", dependenciacolab = "",Puesto = "", Dependencia = "",nuevopuesto = "", nuevadependencia = "";
-
+     CRUD miCrud = new CRUD();
+    Connection con = (Connection) ConexionBD.GetConnection();
     /**
      * Creates new form Colaborador
      */
@@ -150,6 +157,11 @@ public class Colaborador extends javax.swing.JFrame {
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
+            }
+        });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -345,26 +357,35 @@ public class Colaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+    Dependencia = (String) jComboBox3.getSelectedItem();        // TODO add your handling code here:
+     Puesto = (String) jComboBox1.getSelectedItem(); 
         pnombrecolab = jTextField7.getText();
         snombrecolab = jTextField2.getText();
         papellidocolab = jTextField3.getText();
         sapellidocolab = jTextField4.getText();
-        Puesto = (String) jComboBox1.getSelectedItem();
-        Dependencia= (String) jComboBox3.getSelectedItem();
-        
         if (pnombrecolab.equals("") || snombrecolab.equals("") ||  papellidocolab.equals("") ||  sapellidocolab.equals("")) {
             JOptionPane.showMessageDialog(null, "No ha  llenado correctamente los datos ");
         } else if (pnombrecolab.equals("Primer Nombre")||snombrecolab.equals("Segundo Nombre")||papellidocolab.equals("Primer Apelldio")||sapellidocolab.equals("Segundo Apelldio")){
          JOptionPane.showMessageDialog(null, "Tienen datos repetidos ");
          }
 
-        System.out.println("1 nombre" + pnombrecolab);
-        System.out.println("2 nombre" + snombrecolab);
-        System.out.println("1 apellido " + papellidocolab);
-        System.out.println("2 apelldio " + sapellidocolab);
-        System.out.println("puesto " + Puesto);
-        System.out.println("dependencia " +Dependencia);
+        System.out.println("1 nombre:" + pnombrecolab);
+        System.out.println("2 nombre:" + snombrecolab);
+        System.out.println("1 apellido: " + papellidocolab);
+        System.out.println("2 apelldio:" + sapellidocolab);
+        System.out.println("dependencia:" +Dependencia);
+        System.out.println("puesto:" + Puesto);
+        
+   try {
+      
+       
+    
+ miCrud.InsertarColaborador(con, pnombrecolab ,snombrecolab,papellidocolab,sapellidocolab,Dependencia,Puesto);
+       System.out.println("INGRESADO CON EXITO"); 
+   } catch (SQLException ex) {
+        Logger.getLogger(Colaborador.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -391,6 +412,10 @@ public class Colaborador extends javax.swing.JFrame {
           nuevadependencia= JOptionPane.showInputDialog("Ingrese la nueva dependencia");
         jComboBox3.addItem(nuevadependencia);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
