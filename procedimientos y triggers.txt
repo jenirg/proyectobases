@@ -1,32 +1,4 @@
 
- 
- Delete from serie where id=25;
- Select*from registro;
- insert into serie(no_serie) values('29a');
- select*from serie;
- SELECT MAX(id) FROM serie; 
- DELIMITER //
- DROP TRIGGER IF EXISTS GuardarRegistro //
- CREATE TRIGGER GuardarRegistro
- after INSERT ON serie
- FOR EACH ROW BEGIN
- declare SERIE int default 0;
- declare dispositivoV varchar(45);
- declare cantidadV int;
- declare marcaV varchar(45);
- declare modeloV varchar(45);
- declare procedenciaV varchar(45);
- declare descripcionV varchar(255);
- declare total_monetario float;
- declare precio_unitario float;
- 
- SELECT MAX(id) INTO SERIE FROM serie; 
- set SERIE=SERIE+1;
- INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,descripcion,total_monetario,precio_unitario,serie_id) 
- VALUES(dispositivoV, cantidadV ,marcaV ,modeloV,procedenciaV, descripcionV , total_monetarioV ,precio_unitarioV ,SERIE);
- end;//
- DELIMITER ;
-             
 //-----------------------------------------PROCEDIMIENTO PARA INGRESAR REGISTRO----------------------------------------//             
 delimiter //
 DROP PROCEDURE IF EXISTS InsertarRegistro //
@@ -119,3 +91,79 @@ WHERE
 UPDATE registro SET cantidad=TOTAL WHERE id=IDREGISTRO;
 end;//
  DELIMITER ;
+
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR USUARIO-----------------------------------------//  
+
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarUsuario //
+CREATE PROCEDURE InsertarUsuario(
+ correosp varchar(45),
+   contraseñasp varchar(45),
+    correoU varchar(45),
+   contraseñaU varchar(45),
+    super_usuarioU tinytext,
+     dependenciaU varchar(45),
+    primer_nombreU varchar(45),
+    segundo_nombreU varchar(45),
+    primer_apellidoU varchar(45),
+    segundo_apellidoU varchar(45)
+)
+BEGIN
+declare IDUSUARIO int default 0;
+declare IDDEPENDENCIA int default 0; 
+declare CORREO varchar(45) default 'x';
+declare CONTRASEÑA varchar(45) default 'x';
+select correo, contraseña into CORREO, CONTRASEÑA from usuario where super_usuario=true;
+select id into IDDEPENDENCIA from dependencia where la_dependencia=dependenciaU;
+if CORREO=correosp and CONTRASEÑA=contraseñasp then
+if IDDEPENDENCIA > 0 THEN
+ INSERT INTO usuario(correo, contraseña, super_usuario, dependencia_id,primer_nombre,segundo_nombre, primer_apellido,    segundo_apellido) 
+ VALUES(correoU, contraseñaU, super_usuarioU,IDDEPENDENCIA,primer_nombreU,segundo_nombreU,primer_apellidoU,segundo_apellidoU );
+ END IF;
+ end if;
+END;//
+delimiter ;
+call conexion.InsertarUsuario('pruea@gmail.com','5@IJ?65@?)56?@(JI65@I)?6?','jeniferrabanales99@gmail.com','jenifer',false,'Area de Planta','Jenifer','Alejandra','Rabanales','Gamboa');
+call conexion.InsertarUsuario('prueba@gmail.com','5@IJ?65@?)56?@(JI65@I)?6?','joaquinmh1019@gmail.com','joaquin',false,'Area Administrativa','Amilcar','Joaquin','Morales','Huitz');
+
+
+//-----------------------------------------PROCEDIMIENTO PARA ACTUALIZAR CONTRASEÑA-----------------------------------------//  
+
+
+delimiter //
+DROP PROCEDURE IF EXISTS ActualizarContraseña //
+CREATE PROCEDURE ActualizarContraseña(
+    correoU varchar(45),
+   contraseñaU varchar(45)
+)
+BEGIN
+ UPDATE usuario SET contraseña=contraseñaU WHERE correo=correoU;
+END;//
+delimiter ;
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR COLABORADOR-----------------------------------------//  
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarColaborador //
+CREATE PROCEDURE InsertarColaborador(
+    primer_nombreC varchar(45),
+    segundo_nombreC varchar(45),
+    primer_apellidoC varchar(45),
+    segundo_apellidoC varchar(45),
+     dependenciaC varchar(45),
+     puestoC varchar(45)
+)
+BEGIN
+declare IDCOLABORADOR int default 0;
+declare IDPUESTO_ID int default 0; 
+declare IDDEPENDENCIA int default 0;
+select id into IDPUESTO_ID from puesto where el_puesto=puestoC;
+select id into IDDEPENDENCIA from dependencia where la_dependencia=dependenciaC;
+if IDDEPENDENCIA > 0 THEN
+if IDPUESTO_ID > 0 THEN
+ INSERT INTO colaborador(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,puesto_id, dependencia_id) 
+ VALUES(primer_nombreC, segundo_nombreC, primer_apellidoC, segundo_apellidoC, IDPUESTO_ID,IDDEPENDENCIA);
+ END IF;
+END IF;
+END;//
+delimiter ; 
