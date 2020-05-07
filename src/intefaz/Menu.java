@@ -31,7 +31,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         REGISTRO = new javax.swing.JButton();
-        ENTREGA = new javax.swing.JButton();
         USUARIOS = new javax.swing.JButton();
         ENTREGA1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -52,16 +51,6 @@ public class Menu extends javax.swing.JFrame {
         REGISTRO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 REGISTROActionPerformed(evt);
-            }
-        });
-
-        ENTREGA.setBackground(new java.awt.Color(0, 0, 102));
-        ENTREGA.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        ENTREGA.setForeground(new java.awt.Color(255, 255, 255));
-        ENTREGA.setText("REPORTES");
-        ENTREGA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ENTREGAActionPerformed(evt);
             }
         });
 
@@ -110,8 +99,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(REGISTRO, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                     .addComponent(ENTREGA1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(USUARIOS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ENTREGA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(USUARIOS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,9 +114,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(ENTREGA1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(USUARIOS, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(ENTREGA, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addGap(155, 155, 155))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,17 +125,13 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ENTREGAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ENTREGAActionPerformed
-        // TODO add your handling code here:
-         Ingreso yy = new Ingreso(4);
-         yy.setVisible(true);
-    }//GEN-LAST:event_ENTREGAActionPerformed
 
     private void ENTREGA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ENTREGA1ActionPerformed
         // TODO add your handling code here:
@@ -218,7 +200,6 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ENTREGA;
     private javax.swing.JButton ENTREGA1;
     private javax.swing.JButton REGISTRO;
     private javax.swing.JButton USUARIOS;
