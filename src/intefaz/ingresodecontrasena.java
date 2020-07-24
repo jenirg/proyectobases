@@ -176,13 +176,9 @@ String pass_concatenada2 = "";
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         // TODO add your handling code here:
        
-        String pass_concatenada2="";
+        //String pass_concatenada2="";
          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            char[] contraseña = jPasswordField1.getPassword();
-            for (int i = 0; i < contraseña.length; i++) {
-                pass_concatenada2 = pass_concatenada2 + contraseña[i];
-                System.out.println(contraseña[i]);
-            }
+           
             contrasenia=pass_concatenada2;
              System.out.println(pass_concatenada2);
             //jButton3.requestFocus();
@@ -203,18 +199,30 @@ String pass_concatenada2 = "";
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     try {
         // TODO add your handling code here:
+        // ver que los txt no estene vacios 
+        pass_concatenada2="";
         usuario = jTextField1.getText();
+         char[] contraseña = jPasswordField1.getPassword();
+            for (int i = 0; i < contraseña.length; i++) {
+                pass_concatenada2 = pass_concatenada2 + contraseña[i];
+                System.out.println(contraseña[i]);
+            }
         String pass= (comprimir(pass_concatenada2));
         System.out.println(usuario);
         System.out.println(pass_concatenada2);
-        miCrud.InsertarUsuario(con, usuario, pass,correoE,contraseñaE,super_usuarioE,dependencia_idE,primer_nombreE, segundo_nombreE, primer_apellidoE, segundo_apellidoE);
+        System.out.println("pass comprimirda "+ pass);
+        boolean j=miCrud.BusquedaDeSuperUsuario(usuario, pass);
+        if (j==true){
         
+            miCrud.InsertarUsuario(con, usuario,pass,correoE,contraseñaE,super_usuarioE,dependencia_idE,primer_nombreE, segundo_nombreE, primer_apellidoE, segundo_apellidoE);
+        Menu2 menu = new Menu2();
         
-        
-        Menu2 menul = new Menu2();
         setVisible(false);
-        // ingresodecontrasena yy = new ingresodecontrasena();
-        // yy.setVisible(true);
+        menu.setVisible(true);
+        }
+ 
+ //        ingresodecontrasena yy = new ingresodecontrasena();
+   //     yy.setVisible(true);
     } catch (SQLException ex) {
         Logger.getLogger(ingresodecontrasena.class.getName()).log(Level.SEVERE, null, ex);
     }

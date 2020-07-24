@@ -5,6 +5,7 @@
  */
 package intefaz;
 
+import Clases.CRUD;
 import java.awt.event.KeyEvent;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -27,10 +28,17 @@ public class PanelMail extends javax.swing.JFrame {
     int codigo;
     int numero, numero2;
     int multiplicacion =0;
+    int ubicaciondeform=0;
+    CRUD micrud=new CRUD();
     /**
      * Creates new form PanelMail
      */
     public PanelMail() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+       public PanelMail(int ubicaciondeformV) {
+        ubicaciondeform=ubicaciondeformV;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -180,13 +188,17 @@ public class PanelMail extends javax.swing.JFrame {
 
     private void btnEnviar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar1ActionPerformed
         // TODO add your handling code here:
+       // if (ubicaciondeform==1){
+            //para cambio de contraseña
         codigo = Integer.parseInt(txtcodigo.getText());
         System.out.println(codigo);
+        String correo=txtdestino.getText();
         if(codigo == multiplicacion){
-         recuperarcontrasenia yy = new recuperarcontrasenia();
+         recuperarcontrasenia yy = new recuperarcontrasenia(correo);
          yy.setVisible(true);
            dispose();
-        }
+        }//}
+        
         
     }//GEN-LAST:event_btnEnviar1ActionPerformed
 

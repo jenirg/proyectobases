@@ -20,6 +20,9 @@ public class Colaborador extends javax.swing.JFrame {
     public Colaborador() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        miCrud.ConsultaDePuestos(jComboBox1);
+        miCrud.ConsultaDeDependencia(jComboBox3);
     }
 
     /**
@@ -153,7 +156,7 @@ public class Colaborador extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente", " ", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
@@ -172,7 +175,6 @@ public class Colaborador extends javax.swing.JFrame {
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Area administrativa", "Gerente", " ", " " }));
         jComboBox3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox3ItemStateChanged(evt);
@@ -402,15 +404,25 @@ public class Colaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-      nuevopuesto = JOptionPane.showInputDialog("Ingrese el nuevo puesto");
-        jComboBox1.addItem(nuevopuesto);
+         try {
+            // TODO add your handling code here:
+            nuevopuesto = JOptionPane.showInputDialog("Ingrese el nuevo puesto");
+            jComboBox1.addItem(nuevopuesto);
+            miCrud.Insertar_puesto(nuevopuesto);
+        } catch (SQLException ex) {
+            Logger.getLogger(Colaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-          nuevadependencia= JOptionPane.showInputDialog("Ingrese la nueva dependencia");
-        jComboBox3.addItem(nuevadependencia);
+         try {
+            // TODO add your handling code here:
+            nuevadependencia= JOptionPane.showInputDialog("Ingrese la nueva dependencia");
+            jComboBox3.addItem(nuevadependencia);
+            miCrud.Insertar_dependencia(nuevadependencia);
+        } catch (SQLException ex) {
+            Logger.getLogger(Colaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

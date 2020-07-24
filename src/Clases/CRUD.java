@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -22,7 +23,8 @@ import javax.swing.JTextField;
  * @author dell
  */
 public class CRUD {
- Connection miConexion = (Connection) ConexionBD.GetConnection();
+
+    Connection miConexion = (Connection) ConexionBD.GetConnection();
 
     public void Insertar_entrega(String v_dispo, int v_cant, String v_persona) throws SQLException {
 
@@ -111,12 +113,7 @@ public class CRUD {
         }
     }
 
-
-
-
-  
-   
-     public void Insertar_nombre_apellido(String primer_nombre,String segundo_nombre,String primer_apellido,String segundo_apellido,int usuario_id) throws SQLException {
+    public void Insertar_nombre_apellido(String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, int usuario_id) throws SQLException {
 
         try {
             try (Statement statement = (Statement) miConexion.createStatement()) {
@@ -130,7 +127,8 @@ public class CRUD {
             JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
         }      // TODO 
     }
-    public void Insertar_usuario(String cui,Date fecha_nacimiento,String correo,String contraseña,boolean super_usuario, int puesto_id,int dependencia_id) throws SQLException {
+
+    public void Insertar_usuario(String cui, Date fecha_nacimiento, String correo, String contraseña, boolean super_usuario, int puesto_id, int dependencia_id) throws SQLException {
 
         try {
             try (Statement statement = (Statement) miConexion.createStatement()) {
@@ -144,24 +142,27 @@ public class CRUD {
             JOptionPane.showMessageDialog(null, "NO GUARDO EL REGISTRO");
         }      // TODO 
     }
-   public void getconexion() throws SQLException{
+
+    public void getconexion() throws SQLException {
         miConexion.close();
-   }
- public static void IngresarRegistro(Connection con,String dispositivo,int cantidad,String marca, String modelo,String procedencia,String descripcion,float total_monetario, float precio_unitario) throws SQLException { 
-    try(CallableStatement cstmt = con.prepareCall("{call conexion.InsertarRegistro(?, ?, ? ,? ,?, ?, ? ,? )}"); ) {  
-        cstmt.setString(1,dispositivo);
-        cstmt.setInt(2,cantidad );
-        cstmt.setString(3,marca);
-        cstmt.setString(4,modelo);
-        cstmt.setString(5,procedencia);
-        cstmt.setString(6,descripcion);
-        cstmt.setFloat(7,total_monetario);
-        cstmt.setFloat(8,precio_unitario);
-        cstmt.execute();  
-        System.out.println("Ingreso correcto");  
-    }  
     }
-  public static void IngresarEntrega(Connection con, String dispositivo, int cantidad, String serie, String persona_entrega, String NoS,String persona_recibe,String persona_instala,String dependencia,String ubicacion) throws SQLException {
+
+    public static void IngresarRegistro(Connection con, String dispositivo, int cantidad, String marca, String modelo, String procedencia, String descripcion, float total_monetario, float precio_unitario) throws SQLException {
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarRegistro(?, ?, ? ,? ,?, ?, ? ,? )}");) {
+            cstmt.setString(1, dispositivo);
+            cstmt.setInt(2, cantidad);
+            cstmt.setString(3, marca);
+            cstmt.setString(4, modelo);
+            cstmt.setString(5, procedencia);
+            cstmt.setString(6, descripcion);
+            cstmt.setFloat(7, total_monetario);
+            cstmt.setFloat(8, precio_unitario);
+            cstmt.execute();
+            System.out.println("Ingreso correcto");
+        }
+    }
+
+    public static void IngresarEntrega(Connection con, String dispositivo, int cantidad, String serie, String persona_entrega, String NoS, String persona_recibe, String persona_instala, String dependencia, String ubicacion) throws SQLException {
         try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarEntrega(?, ?, ? ,? ,? ,?, ?, ?, ? )}");) {
             cstmt.setString(1, dispositivo);
             cstmt.setInt(2, cantidad);
@@ -175,7 +176,7 @@ public class CRUD {
             cstmt.execute();
             JOptionPane.showMessageDialog(null, "ENTREGA CORRECTA");
         }
-        
+
     }
 
     public void ConsultaPorNoSerie(int serie, JTextField dispositivo, JTextField modelo, JTextField marca) {
@@ -183,12 +184,11 @@ public class CRUD {
             //Connection miConexion=(Connection) Conexion.GetConnection();
 
             Statement s = miConexion.createStatement();
-            ResultSet clr = s.executeQuery("select * from registro where serie_id=" + serie );
-            while (clr.next())
-            {
-            dispositivo.setText((clr.getString("dispositivo")));
-            modelo.setText((clr.getString("modelo")));
-            marca.setText((clr.getString("marca")));
+            ResultSet clr = s.executeQuery("select * from registro where serie_id=" + serie);
+            while (clr.next()) {
+                dispositivo.setText((clr.getString("dispositivo")));
+                modelo.setText((clr.getString("modelo")));
+                marca.setText((clr.getString("marca")));
             }         // return cte;
         } catch (SQLException ex) {
             Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,7 +203,7 @@ public class CRUD {
             Statement s = miConexion.createStatement();
             ResultSet clr = s.executeQuery("select id from serie where no_serie='" + serie + "'");
             while (clr.next()) {
-                IDSerie=clr.getInt("id");
+                IDSerie = clr.getInt("id");
                 //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
             }
 
@@ -213,20 +213,20 @@ public class CRUD {
         }
         return IDSerie;
     }
-    
-        public boolean ConsultaDeExistencias(int serie, int cantidad) {
+
+    public boolean ConsultaDeExistencias(int serie, int cantidad) {
         int CANTIDAD = 0;
-        boolean x=true;
+        boolean x = true;
         try {
             //Connection miConexion=(Connection) Conexion.GetConnection();
 
             Statement s = miConexion.createStatement();
             ResultSet clr = s.executeQuery("select cantidad from registro where serie_id=" + serie);
             while (clr.next()) {
-                CANTIDAD=clr.getInt("cantidad");
-                if (CANTIDAD<cantidad){
+                CANTIDAD = clr.getInt("cantidad");
+                if (CANTIDAD < cantidad) {
                     JOptionPane.showMessageDialog(null, "NO SE PUEDE REALIZAR LA ENTREGA, NO HAY SUFICIENTES EXISTENCIAS");
-                    x=false;
+                    x = false;
                 }
 
                 //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
@@ -238,37 +238,244 @@ public class CRUD {
         }
         return x;
     }
-     public static void InsertarUsuario(Connection con,String correosp,String contraseniasp,String correo,String contraseña, boolean super_usuario, String dependencia_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido ) throws SQLException { 
-                    
-                    try(CallableStatement cstmt = con.prepareCall("{call conexion.InsertarUsuario(?, ?, ? ,?,?,?,?,?,?,?)}"); ) {  
-                     cstmt.setString(1,correosp);
-                    cstmt.setString(2,contraseniasp);
-                    cstmt.setString(3,correo);
-                    cstmt.setString(4,contraseña);
-                    cstmt.setBoolean(5, super_usuario);
-                    cstmt.setString(6,dependencia_id);
-                    cstmt.setString(7,primer_nombre);
-                    cstmt.setString(8,segundo_nombre);
-                    cstmt.setString(9,primer_apellido);
-                    cstmt.setString(10,segundo_apellido);
-                    cstmt.execute();  
-                     System.out.println("Ingreso correcto");  
-    
-                     }  
+
+    public static void InsertarUsuario(Connection con, String correosp, String contraseniasp, String correo, String contraseña, boolean super_usuario, String dependencia_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido) throws SQLException {
+
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarUsuario(?, ?, ? ,?,?,?,?,?,?,?)}");) {
+            cstmt.setString(1, correosp);
+            cstmt.setString(2, contraseniasp);
+            cstmt.setString(3, correo);
+            cstmt.setString(4, contraseña);
+            cstmt.setBoolean(5, super_usuario);
+            cstmt.setString(6, dependencia_id);
+            cstmt.setString(7, primer_nombre);
+            cstmt.setString(8, segundo_nombre);
+            cstmt.setString(9, primer_apellido);
+            cstmt.setString(10, segundo_apellido);
+            cstmt.execute();
+             JOptionPane.showMessageDialog(null, "Ingreso correcto");
+         
+
+        }
+    }
+
+    public static void InsertarColaborador(Connection con, String primernom, String segundonom, String primerape, String segundoape, String dependenciaid, String puestoid) throws SQLException {
+
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.InsertarColaborador(?, ?, ? ,?,?,?)}");) {
+            cstmt.setString(1, primernom);
+            cstmt.setString(2, segundonom);
+            cstmt.setString(3, primerape);
+            cstmt.setString(4, segundoape);
+            cstmt.setString(5, dependenciaid);
+            cstmt.setString(6, puestoid);
+            cstmt.execute();
+             JOptionPane.showMessageDialog(null, "Ingreso correcto");
+         
+
+        }
+    }
+
+    public static void ActualizarContraseña(Connection con, String correo, String contraseña) throws SQLException {
+
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.ActualizarContraseña(?, ?)}");) {
+            cstmt.setString(1, correo);
+            cstmt.setString(2, contraseña);
+            cstmt.execute();
+            JOptionPane.showMessageDialog(null, "Actualizo de forma correcta");
+       
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+    }
+
+    public boolean BusquedaDeSuperUsuario(String correo, String contraseña) {
+        String CORREO, CONTRASEÑA;
+        boolean x = true;
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select correo, contraseña from usuario where super_usuario=true");
+
+            while (clr.next()) {
+                CORREO = clr.getString("correo");
+                CONTRASEÑA = clr.getString("contraseña");
+                int compatibleU =  CORREO.compareTo(correo);
+                int compatibleC = CONTRASEÑA.compareTo(contraseña);
+
+                 if (compatibleU < 0 || compatibleU > 0) {
+                    JOptionPane.showMessageDialog(null, "USUARIO INCORRECTO");
+                    x = false;
+                 }
+                 else if (compatibleC < 0 || compatibleC > 0) {
+                    JOptionPane.showMessageDialog(null, "CONTRASEÑA INCORRECTA");
+                    x = false;
+                 }
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+        return x;
+    }
+   public static void ActualizarSuperUsuario(Connection con, String correo, String contraseña, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido) throws SQLException {
+
+        try (CallableStatement cstmt = con.prepareCall("{call conexion.ActualizarSuperUsuario(?, ?, ?,?,?,?)}");) {
+            cstmt.setString(1, correo);
+            cstmt.setString(2, contraseña);
+            cstmt.setString(3, primer_nombre);
+            cstmt.setString(4, segundo_nombre);
+            cstmt.setString(5, primer_apellido);
+            cstmt.setString(6, segundo_apellido);
+            cstmt.execute();
+            JOptionPane.showMessageDialog(null, "ACUTALIZACIÓN DE SUPER USUARIO EXITOSA");
+
+        }
+    }
+   
+       public void ConsultaDeEmpleados(JComboBox solicitado, JComboBox autorizado, JComboBox entregado, JComboBox recibido) {
+        String nombrecompleto = "";
+        String pn, sn, pa, sa;
+        String espacio = " ";
+        boolean superusuario;
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,super_usuario from usuario");
+            while (clr.next()) {
+                pn = clr.getString("primer_nombre");
+                sn = clr.getString("segundo_nombre");
+                pa = clr.getString("primer_apellido");
+                sa = clr.getString("segundo_apellido");
+                superusuario = clr.getBoolean("super_usuario");
+                System.out.println("SUPER USUARIO" + superusuario);
+                if (superusuario == false) {
+                    nombrecompleto = pn + espacio + sn + espacio + pa + espacio + sa;
+                    solicitado.addItem(nombrecompleto);
+                    entregado.addItem(nombrecompleto);
+                    recibido.addItem(nombrecompleto);
+                } else if (superusuario == true) {
+                    nombrecompleto = pn + espacio + sn + espacio + pa + espacio + sa;
+                    autorizado.addItem(nombrecompleto);
                 }
-     
-      public static void InsertarColaborador(Connection con,String primernom, String segundonom,String primerape, String segundoape, String dependenciaid,String puestoid ) throws SQLException { 
-                    
-          try(CallableStatement cstmt = con.prepareCall("{call conexion.InsertarColaborador(?, ?, ? ,?,?,?)}"); ) {  
-                     cstmt.setString(1,primernom);
-                    cstmt.setString(2,segundonom);
-                    cstmt.setString(3,primerape);
-                    cstmt.setString(4,segundoape);
-                    cstmt.setString(5,dependenciaid);
-                    cstmt.setString(6,puestoid);
-                    cstmt.execute();  
-                     System.out.println("Ingreso correcto");  
-    
-                     }  
-     }
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+    }
+       public boolean accesoUsuario( String correo, String contraseña){
+           String usuario2, contraseña2;
+            boolean x = true;
+            try {
+           Statement s = miConexion.createStatement();
+           ResultSet clr = s.executeQuery("select correo, contraseña from usuario");
+           while (clr.next()) {
+                usuario2 = clr.getString("correo");
+                contraseña2 = clr.getString("contraseña");
+                int compatibleU = usuario2.compareTo(correo);
+                int compatibleC = contraseña2.compareTo(contraseña2);
+
+                 if ((compatibleU > 0 || compatibleU > 0)) {
+                     
+                    //JOptionPane.showMessageDialog(null, "USUARIO ENCONTRADO");
+                    x = true;
+                 }
+                 else if (compatibleC > 0 || compatibleC > 0) {
+                   // JOptionPane.showMessageDialog(null, "CONTRASEÑA ENCONTRADO");
+                    x = true;
+                 }else if (compatibleC < 0 || compatibleC > 0) {
+                   // JOptionPane.showMessageDialog(null, "CONTRASEÑA ENCONTRADO");
+                    x = false;
+                 }else if (compatibleC < 0 || compatibleC > 0) {
+                   // JOptionPane.showMessageDialog(null, "CONTRASEÑA ENCONTRADO");
+                    x = false;
+                 }
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+            }catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+            return x;
+       }
+         public void ConsultaDeColaborador(JComboBox recibido) {
+        String nombrecompleto = "";
+        String pn, sn, pa, sa;
+        String espacio = " ";
+        boolean superusuario;
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select primer_nombre,segundo_nombre,primer_apellido,segundo_apellido from colaborador");
+            while (clr.next()) {
+                pn = clr.getString("primer_nombre");
+                sn = clr.getString("segundo_nombre");
+                pa = clr.getString("primer_apellido");
+                sa = clr.getString("segundo_apellido");
+
+                nombrecompleto = pn + espacio + sn + espacio + pa + espacio + sa;
+                recibido.addItem(nombrecompleto);
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+    } 
+             
+       public void ConsultaDePuestos(JComboBox recibido) {
+        String puesto = "";
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select el_puesto from puesto");
+            while (clr.next()) {
+                puesto = clr.getString("el_puesto");
+                recibido.addItem(puesto);
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+    }
+       
+           
+       public void ConsultaDeDependencia(JComboBox recibido) {
+        String dep = "";
+        try {
+            //Connection miConexion=(Connection) Conexion.GetConnection();
+
+            Statement s = miConexion.createStatement();
+            ResultSet clr = s.executeQuery("select la_dependencia from dependencia");
+            while (clr.next()) {
+                dep = clr.getString("la_dependencia");
+                recibido.addItem(dep);
+
+                //System.out.println("EL ID DE LA SERIE ENCONTRADA"+ clr.getInt("id") );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+    }
+       
 }

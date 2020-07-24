@@ -22,7 +22,7 @@ import sun.security.util.Password;
  */
 public class crearcuenta extends javax.swing.JFrame {
 
-    String letra, dpi = "", pregunta = "", primernombre = "", segundonombre = "", primerapellido = "", segundoapellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "", otradependencia = "";
+    String letra, dpi = "",nuevadependencia="", pregunta = "", primernombre = "", segundonombre = "", primerapellido = "", segundoapellido = "", correo = "", contraseña = "", la_dependencia = "", Mes = "", password = "", otradependencia = "";
     int Dia = 0, Año = 0;
     int nopregunta = 0;
     Boolean sp;
@@ -37,6 +37,8 @@ public class crearcuenta extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         dependencias();
+        miCrud.ConsultaDeDependencia(jComboBox4);
+
     }
 
     public void dependencias() {
@@ -320,7 +322,6 @@ public class crearcuenta extends javax.swing.JFrame {
             }
         });
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidad Regional Administrativa" }));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox4ActionPerformed(evt);
@@ -606,7 +607,10 @@ public class crearcuenta extends javax.swing.JFrame {
                                 //ir a el area de aprobación por el super usuario
                                 String xx;
                                 xx = comprimir(pass_concatenada1);
-                   
+                                PanelMail2 panel= new PanelMail2( correo,xx, primernombre, segundonombre,primerapellido, segundoapellido);
+                                //setVisible(false);
+                                //PanelMail yy = new PanelMail();
+                                panel.setVisible(true);
                                 // hacer update de super usuario
 
                             } else {
@@ -816,10 +820,14 @@ public class crearcuenta extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        otradependencia = jTextField6.getText();
-        jComboBox4.addItem(otradependencia);
-        jTextField6.setText("");
-        jTextField6.requestFocus();
+        try {
+            // TODO add your handling code here:
+            nuevadependencia= JOptionPane.showInputDialog("Ingrese la nueva dependencia");
+            jComboBox4.addItem(nuevadependencia);
+            miCrud.Insertar_dependencia(nuevadependencia);
+        } catch (SQLException ex) {
+            Logger.getLogger(Colaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jPassword1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassword1KeyReleased
