@@ -108,6 +108,10 @@ public class Forma57 extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
+=======
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mariana Ramirez" }));
+>>>>>>> cbc23415ea75ad7ee805e48e00f194572579a72b
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
