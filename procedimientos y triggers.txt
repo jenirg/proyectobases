@@ -1,0 +1,169 @@
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR REGISTRO----------------------------------------//             
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarRegistro //
+CREATE PROCEDURE InsertarRegistro(
+dispositivoV varchar(45),
+cantidadV int,
+marcaV varchar(45),
+modeloV varchar(45),
+procedenciaV varchar(45),
+descripcionV varchar(255),
+total_monetarioV float,
+precio_unitarioV float
+)
+BEGIN
+ declare SERIE int default 0;
+ SELECT MAX(id) INTO SERIE FROM serie; 
+ INSERT INTO registro(dispositivo,cantidad,marca,modelo,procedencia,descripcion,total_monetario,precio_unitario,serie_id) 
+ VALUES(dispositivoV, cantidadV ,marcaV ,modeloV,procedenciaV, descripcionV , total_monetarioV ,precio_unitarioV ,SERIE);
+ END;//
+delimiter ;
+call conexion.InsertarRegistro('cable', 5 , 'utp', 'x', 'compra', 'sin_imagen', 500.00, 500.00);
+
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR ENTREGA-----------------------------------------//  
+
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarEntrega //
+CREATE PROCEDURE InsertarEntrega(
+dispositivoV varchar(45),
+cantidadV int,
+serieV varchar(45),
+persona_entregaV varchar(45),
+NoS varchar(45),
+persona_recibeV varchar(45),
+persona_instalaV varchar(45),
+dependenciaV varchar(100),
+ubicacionV varchar(45)
+)
+BEGIN
+declare IDSERIEE int default 0;
+declare IDDEPENDENCIA int default 0;
+declare CANTIDADE varchar(45); 
+SELECT 
+    s.id, r.cantidad
+INTO IDSERIEE , CANTIDADE FROM
+    registro r
+        INNER JOIN
+    serie s ON r.serie_id = s.id
+WHERE
+    s.no_serie = serieV;
+
+select id into IDDEPENDENCIA from dependencia where la_dependencia=dependenciaV;
+
+IF CANTIDADE>cantidadV THEN
+ INSERT INTO entrega(dispositivo,cantidad,persona_entrega,serie_id) 
+ VALUES(dispositivoV, cantidadV ,persona_entregaV,IDSERIEE);
+ INSERT INTO nota_responsabilidad(no,persona_instala,persona_recibe, ubicacion,dependencia_id) 
+ VALUES(NoS,persona_instalaV,persona_recibeV,ubicacionV,IDDEPENDENCIA);
+ SET CANTIDADE=0;
+END IF;
+END;//
+delimiter ; 
+call conexion.InsertarEntrega ('Mouse',1,'456bef','FULANITO 5','789ywz','FULANITO 6', ' FULANITO 7', 'Unidad Regional de Informatica y Telecomunicaciones','Quetzaltenango');
+
+//-----------------------------------------TRIGGER PARA ACTUALIZAR CANTIDAD DE REGISTRO-----------------------------------------//  
+
+ DELIMITER //
+ DROP TRIGGER IF EXISTS DisminuirExistencias//
+ CREATE TRIGGER DisminuirExistencias
+ after INSERT ON entrega
+ FOR EACH ROW BEGIN
+ declare CANTIDADE int default 0;
+ declare CANTIDADR int default 0;
+ declare TOTAL int default 0;
+ declare IDREGISTRO int default 0;
+ declare IDSERIE int default 0;
+ 
+ select cantidad, serie_id into CANTIDADE, IDSERIE from  entrega where id=New.id;
+ SELECT 
+     r.cantidad, r.id
+INTO  CANTIDADR, IDREGISTRO FROM
+    registro r
+        INNER JOIN
+    serie s ON r.serie_id = s.id
+WHERE
+    s.id = IDSERIE;
+
+ set TOTAL=CANTIDADR-CANTIDADE;
+
+UPDATE registro SET cantidad=TOTAL WHERE id=IDREGISTRO;
+end;//
+ DELIMITER ;
+
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR USUARIO-----------------------------------------//  
+
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarUsuario //
+CREATE PROCEDURE InsertarUsuario(
+ correosp varchar(45),
+   contraseñasp varchar(45),
+    correoU varchar(45),
+   contraseñaU varchar(45),
+    super_usuarioU tinytext,
+     dependenciaU varchar(45),
+    primer_nombreU varchar(45),
+    segundo_nombreU varchar(45),
+    primer_apellidoU varchar(45),
+    segundo_apellidoU varchar(45)
+)
+BEGIN
+declare IDUSUARIO int default 0;
+declare IDDEPENDENCIA int default 0; 
+declare CORREO varchar(45) default 'x';
+declare CONTRASEÑA varchar(45) default 'x';
+select correo, contraseña into CORREO, CONTRASEÑA from usuario where super_usuario=true;
+select id into IDDEPENDENCIA from dependencia where la_dependencia=dependenciaU;
+if CORREO=correosp and CONTRASEÑA=contraseñasp then
+if IDDEPENDENCIA > 0 THEN
+ INSERT INTO usuario(correo, contraseña, super_usuario, dependencia_id,primer_nombre,segundo_nombre, primer_apellido,    segundo_apellido) 
+ VALUES(correoU, contraseñaU, super_usuarioU,IDDEPENDENCIA,primer_nombreU,segundo_nombreU,primer_apellidoU,segundo_apellidoU );
+ END IF;
+ end if;
+END;//
+delimiter ;
+call conexion.InsertarUsuario('pruea@gmail.com','5@IJ?65@?)56?@(JI65@I)?6?','jeniferrabanales99@gmail.com','jenifer',false,'Area de Planta','Jenifer','Alejandra','Rabanales','Gamboa');
+call conexion.InsertarUsuario('prueba@gmail.com','5@IJ?65@?)56?@(JI65@I)?6?','joaquinmh1019@gmail.com','joaquin',false,'Area Administrativa','Amilcar','Joaquin','Morales','Huitz');
+
+
+//-----------------------------------------PROCEDIMIENTO PARA ACTUALIZAR CONTRASEÑA-----------------------------------------//  
+
+
+delimiter //
+DROP PROCEDURE IF EXISTS ActualizarContraseña //
+CREATE PROCEDURE ActualizarContraseña(
+    correoU varchar(45),
+   contraseñaU varchar(45)
+)
+BEGIN
+ UPDATE usuario SET contraseña=contraseñaU WHERE correo=correoU;
+END;//
+delimiter ;
+
+//-----------------------------------------PROCEDIMIENTO PARA INGRESAR COLABORADOR-----------------------------------------//  
+delimiter //
+DROP PROCEDURE IF EXISTS InsertarColaborador //
+CREATE PROCEDURE InsertarColaborador(
+    primer_nombreC varchar(45),
+    segundo_nombreC varchar(45),
+    primer_apellidoC varchar(45),
+    segundo_apellidoC varchar(45),
+     dependenciaC varchar(45),
+     puestoC varchar(45)
+)
+BEGIN
+declare IDCOLABORADOR int default 0;
+declare IDPUESTO_ID int default 0; 
+declare IDDEPENDENCIA int default 0;
+select id into IDPUESTO_ID from puesto where el_puesto=puestoC;
+select id into IDDEPENDENCIA from dependencia where la_dependencia=dependenciaC;
+if IDDEPENDENCIA > 0 THEN
+if IDPUESTO_ID > 0 THEN
+ INSERT INTO colaborador(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,puesto_id, dependencia_id) 
+ VALUES(primer_nombreC, segundo_nombreC, primer_apellidoC, segundo_apellidoC, IDPUESTO_ID,IDDEPENDENCIA);
+ END IF;
+END IF;
+END;//
+delimiter ; 
